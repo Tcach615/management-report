@@ -1,0 +1,30 @@
+# LaTeX build artifacts
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.bbl
+*.blg
+*.run.xml
+*-blx.bib
+*.nav
+*.snm
+*.vrb
+
+# minted cache
+*.minted
+*_minted*/
+*.data.minted
+
+# Compiled output (remove if you WANT the PDF on GitHub)
+*.pdf
+
+# Editor/OS junk
+.vscode/
+.idea/
+Thumbs.db

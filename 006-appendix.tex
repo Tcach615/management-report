@@ -1,0 +1,199 @@
+\chapter*{Annexes Techniques}
+\label{chap:appendix}
+\markboth{\MakeUppercase{Annexes Techniques}}{}
+\addcontentsline{toc}{chapter}{Annexes Techniques}
+
+\section*{Annexe 1 : Manifeste du Module (\texttt{\_\_manifest\_\_.py})}
+Le fichier de déclaration du module spécifie les métadonnées pour \textbf{\companyName}, les dépendances vers les modules natifs d'Odoo 18, ainsi que l'ordonnancement précis de chargement des vues, modèles multi-sites, assistants modaux et règles de sécurité.
+
+\begin{lstlisting}[language=Python, caption={Extrait du fichier de déclaration \texttt{\_\_manifest\_\_.py}}]
+{
+    'name': 'Equipment Maintenance System',
+    'version': '18.0.1.0.0',
+    'category': 'Manufacturing/Maintenance',
+    'summary': 'Industrial Maintenance, Multi-Site Locations, Analytics & BYO-LLM Assistant',
+    'sequence': 10,
+    'license': 'LGPL-3',
+    'author': 'IT-Koncept SA & Engineering Team',
+    'website': 'https://www.it-koncept.ch',
+    'depends': [
+        'base',
+        'mail',
+        'stock',
+        'product',
+        'web',
+    ],
+    'data': [
+        # Securite et regles d'acces
+        'security/equipment_security.xml',
+        'security/ir.model.access.csv',
+        # Sequences et Crons
+        'data/equipment_sequence.xml',
+        'data/equipment_cron.xml',
+        'data/mail_template_data.xml',
+        'data/checklist_template_data.xml',
+        # Rapports QWeb PDF
+        'report/equipment_report_templates.xml',
+        'report/equipment_reports.xml',
+        # Vues Metier & Navigation
+        'views/equipment_location_views.xml',
+        'views/equipment_category_views.xml',
+        'views/equipment_views.xml',
+        'views/maintenance_order_views.xml',
+        'views/repair_request_views.xml',
+        'views/equipment_template_views.xml',
+        'views/equipment_dashboard_views.xml',
+        'views/equipment_ai_config_views.xml',
+        'views/equipment_menu.xml',
+        # Wizards modaux
+        'wizard/equipment_ai_nl_wizard_views.xml',
+        'wizard/equipment_report_wizard_views.xml',
+    ],
+    'demo': [
+        'demo/equipment_demo.xml',
+    ],
+    'installable': True,
+    'application': True,
+    'auto_install': False,
+}
+\end{lstlisting}
+
+\newpage
+\section*{Annexe 2 : Matrice de Sécurité \& Règle de Lecture Corrigée}
+L'extrait ci-dessous illustre la définition des permissions CRUD dans \texttt{ir.model.access.csv} ainsi que la correction de la règle d'enregistrement \textit{write-own} où \texttt{perm\_read="0"} a été explicitement défini pour empêcher le masquage des lignes de pièces détachées pour l'administrateur.
+
+\begin{lstlisting}[caption={Extrait des permissions CSV et de la règle XML corrigée}]
+# ir.model.access.csv (extrait sur 45 regles)
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_equipment_viewer,access.equipment.viewer,model_equipment_equipment,group_equipment_viewer,1,0,0,0
+access_equipment_tech,access.equipment.tech,model_equipment_equipment,group_equipment_tech,1,1,1,0
+access_equipment_mgr,access.equipment.mgr,model_equipment_equipment,group_equipment_manager,1,1,1,1
+access_location_user,access.location.user,model_equipment_location,group_equipment_viewer,1,0,0,0
+access_location_mgr,access.location.mgr,model_equipment_location,group_equipment_manager,1,1,1,1
+access_ai_config_mgr,access.ai.config.mgr,model_equipment_ai_config,group_equipment_manager,1,1,1,1
+access_ai_pred_mgr,access.ai.pred.mgr,model_equipment_ai_prediction,group_equipment_manager,1,1,1,0
+
+<!-- Correction de la regle write-own dans equipment_security.xml -->
+<record id="rule_spare_part_line_technician_write" model="ir.rule">
+    <field name="name">Spare Parts: technician can only modify own lines</field>
+    <field name="model_id" ref="model_equipment_spare_part"/>
+    <field name="groups" eval="[(4, ref('group_equipment_tech'))]"/>
+    <field name="perm_read" eval="0"/>  <!-- Correction clef: lecture non filtree -->
+    <field name="perm_write" eval="1"/>
+    <field name="perm_create" eval="1"/>
+    <field name="perm_unlink" eval="1"/>
+    <field name="domain_force">[('create_uid', '=', user.id)]</field>
+</record>
+\end{lstlisting}
+
+\section*{Annexe 3 : Extrait de la Suite de Tests Backend Odoo (138 Tests)}
+L'extrait suivant présente la validation unitaire du calcul du score de santé, de la prévention contre les divisions par zéro sur le MTBF, et du cycle de vie des ordres.
+
+\begin{lstlisting}[language=Python, caption={Extrait des tests unitaires backend (\texttt{tests/test\_equipment.py})}]
+from odoo.tests.common import TransactionCase
+from odoo.exceptions import ValidationError
+
+class TestEquipmentMaintenance(TransactionCase):
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.category = cls.env['equipment.category'].create({
+            'name': 'Usinage Numerique',
+            'code': 'CNC-5AX',
+        })
+        cls.location = cls.env['equipment.location'].create({
+            'name': 'Atelier Production A',
+            'location_type': 'room',
+        })
+        cls.equipment = cls.env['equipment.equipment'].create({
+            'name': 'Centre d Usinage 5-Axes',
+            'serial_no': 'CH-NYON-2026-01',
+            'category_id': cls.category.id,
+            'location_id': cls.location.id,
+            'purchase_date': '2025-01-01',
+            'warranty_end_date': '2027-01-01',
+        })
+
+    def test_health_score_new_machine(self):
+        """Verifie le score initial optimal d'un equipement neuf"""
+        self.equipment._compute_health_score()
+        self.assertGreaterEqual(self.equipment.health_score, 90.0)
+
+    def test_mtbf_zero_division_guard(self):
+        """Verifie que l'absence de panne ne declenche aucune division par zero"""
+        risk_score = self.env['equipment.ai.service'].calculate_failure_risk(self.equipment.id)
+        self.assertGreaterEqual(risk_score, 0.0)
+        self.assertLessEqual(risk_score, 100.0)
+\end{lstlisting}
+
+\newpage
+\section*{Annexe 4 : Extrait des Tests E2E de Navigation Playwright}
+L'extrait ci-dessous, issu de la suite Playwright (\texttt{tests/e2e/full-demo.spec.ts}), démontre l'automatisation de la navigation : dépliage des listes groupées Odoo 18, contrôle du fil d'Ariane, saisie dans le wizard modal et validation de la confirmation d'écriture.
+
+\begin{lstlisting}[language=Python, caption={Extrait du scénario de navigation Playwright E2E (\texttt{full-demo.spec.ts})}]
+import { test, expect } from '@playwright/test';
+
+test.describe('Navigation & View Testing Suite', () => {
+
+  test('Navigate through Equipment list, grouped expansion and detail form', async ({ page }) => {
+    // Connexion et navigation vers le menu Equipements
+    await page.goto('/web#action=equipment_maintenance.action_equipment_equipment');
+    await page.waitForSelector('.o_list_table');
+
+    // Gestion du comportement specifique Odoo 18: deplier les groupes
+    const groupHeaders = page.locator('tr.o_group_header');
+    if (await groupHeaders.count() > 0) {
+      await groupHeaders.first().click();
+      await page.waitForTimeout(300);
+    }
+
+    // Clic sur la premiere fiche et verification du fil d'Ariane
+    await page.locator('.o_data_row').first().click();
+    await expect(page.locator('.breadcrumb-item.active')).toBeVisible();
+
+    // Verifier le badge d'indice de sante
+    const healthBadge = page.locator('field[name="health_score"]');
+    await expect(healthBadge).toBeVisible();
+  });
+
+  test('Validate NL Wizard modal navigation without premature close', async ({ page }) => {
+    // Ouverture de l'assistant de journalisation en langage naturel
+    await page.locator('button:has-text("Journaliser une intervention (IA)")').click();
+    await expect(page.locator('.modal-dialog')).toBeVisible();
+
+    // Saisie du rapport d'intervention
+    await page.fill('textarea[name="raw_text"]', 'Remplacement filtre a huile sur CNC-5AX suite vibration');
+    await page.click('button:has-text("Analyser le texte")');
+
+    // Assertion critique: le dialogue doit rester ouvert (reload action) avec apercu
+    await expect(page.locator('.modal-dialog')).toBeVisible();
+    await expect(page.locator('field[name="extracted_summary"]')).not.toBeEmpty();
+  });
+
+});
+\end{lstlisting}
+
+\section*{Annexe 5 : Script d'Orchestration E2E sous Docker/WSL (\texttt{scripts/e2e-run.sh})}
+Ce script PowerShell/Bash assure la gestion du cycle de vie du conteneur Docker Odoo 18, la persistance des volumes et le déclenchement de la suite Playwright.
+
+\begin{lstlisting}[caption={Extrait du script d'exécution \texttt{scripts/e2e-run.sh}}]
+#!/usr/bin/env bash
+set -euo pipefail
+
+COMPOSE_FILE="docker-compose.yml"
+TARGET_SPECS="${1:-tests/e2e/*.spec.ts}"
+
+echo "==> Verification de la disponibilite de la stack Docker Odoo 18..."
+docker-compose -f "$COMPOSE_FILE" up -d
+
+echo "==> Attente active (polling HTTP) du serveur Odoo sur le port 8069..."
+until curl -s -f -o /dev/null "http://localhost:8069/web/login"; do
+  sleep 1
+done
+
+echo "==> Lancement de la campagne de tests de navigation Playwright E2E..."
+npx playwright test $TARGET_SPECS --reporter=list,html
+
+echo "==> Rapport HTML et videos generes dans artifacts/playwright-report/"
+\end{lstlisting}

@@ -1,0 +1,106 @@
+ Here is a comprehensive research overview of **IT-Koncept SA**:
+
+---
+
+## 1. Origin & Company History
+
+IT-Koncept SA is a **Swiss IT services company founded in 2013** . It is registered in the Swiss Commercial Register under number **CHE-229.451.519** and is part of the **Business-Koncept group** .
+
+- **Original headquarters**: Mies (Vaud)
+- **Current headquarters**: Route du Stand 68, 1260 Nyon, Switzerland (moved in September 2023) 
+- The company celebrated its **10-year anniversary in March 2024** 
+- **Share capital**: CHF 500,000 (increased in January 2026) 
+
+---
+
+## 2. Tunisian Branch
+
+IT-Koncept operates a subsidiary in Tunisia:
+
+| Detail | Information |
+|--------|-------------|
+| **Legal name** | IT-Koncept Tunisia Sàrl |
+| **Address** | 10 Avenue Abderrahmen Azzam, 1073 Bab El Bhar, Tunis  |
+| **Focus** | Software development, particularly Odoo framework applications (accounting, invoicing, HR, payroll, warehouse management, CRM, production management)  |
+| **Key people** | Hammadi Gammoudi (Software Engineer / Tech Lead) ; Bechir Elghali (Service Logiciels)  |
+
+The Tunisian branch appears to serve as a **development and delivery center** supporting the Swiss operations, particularly for custom software and ERP/CRM implementations.
+
+---
+
+## 3. Key Figures & Leadership
+
+| Name | Role | Background |
+|------|------|------------|
+| **Alain Lacroix** | **CEO / Directeur Général** (since Oct 1, 2025) | 35+ years in IT and digital transformation; founder of ALRIX Consulting (LPD/RGPD specialist)  |
+| **Florian Frossard** | **COO / Directeur Associé** – *Administrateur Président* | Co-founder, based in Savièse (Valais)  |
+| **Michael Van Eck** | **Co-associé et Administrateur** | Board member  |
+| **Francesca Tiritiello** | **Directrice Associée** | Management team  |
+| **René Van Eck Duymaer** | **Administrateur** | Based in Cologny  |
+
+The company currently employs **3 people** at the Swiss headquarters according to commercial register data , though the broader group (including Tunisia and partners) is larger.
+
+---
+
+## 4. Target Audience
+
+IT-Koncept primarily targets:
+
+- **Swiss SMEs (PME)** in the Romandy region (French-speaking Switzerland) — Nyon, Geneva, Vaud 
+- **Both private and public organizations** undergoing digital transformation 
+- Companies seeking **end-to-end IT partners** rather than multiple vendors
+
+Notable clients include: Genève-Servette Hockey Club, ArsPanis Suisse SA (Panino Giusto), Securelec, Areas Genève, CFH, Swisscom (partner), Migros, Fnac, BBGI Group, Swiss Language Group, and Perrin Holding .
+
+---
+
+## 5. Goals & Strategic Ambition
+
+The company's stated ambition is:
+
+> *"Conjuguer innovation, qualité et sécurité numérique pour bâtir l'avenir avec nos clients et partenaires"*  
+> *(Combine innovation, quality, and digital security to build the future with our clients and partners)* 
+
+**Strategic priorities:**
+- Accompany clients with **innovative, secure, and tailored solutions**
+- Strengthen position as a **trusted IT partner** on the Swiss market
+- **Invest in innovation** (supported by the 2025 capital increase) 
+- Strong commitment to **quality, innovation, and security**
+
+---
+
+## 6. Departments & Service Lines
+
+IT-Koncept operates through several specialized departments/service lines:
+
+| Department | Description |
+|------------|-------------|
+| **IT Infrastructure & Managed Services** | IT park maintenance, outsourcing, Smart ICT solutions (Swisscom Gold partner), hardware support  |
+| **Custom Software Development** | Bespoke web and embedded software development  |
+| **ERP Solutions** | In-house web-based ERP (12 modules adapted to Swiss market) + Official **Odoo partner** (8+ years experience, V7 to V18)  |
+| **CRM Solutions** | Official Swiss integrator partner for **Efficy CRM**, connected to their ERP; marketing automation  |
+| **E-Commerce & Web Development** | Showcase websites and optimized e-commerce platforms  |
+| **Mobile Applications** | Custom smartphone apps for client differentiation and internal process optimization  |
+| **Data Protection & Compliance** | LPD (Swiss Data Protection Act) / RGPD (GDPR) compliance consulting and transition support  |
+| **IT Consulting & Audits** | Partial or complete IT audits, organizational studies, IT strategy building  |
+| **Digital Accounting (AC-Koncept)** | Digital accounting, payroll management, and administrative services under the AC-Koncept brand  |
+
+---
+
+## Summary Table
+
+| Aspect | Details |
+|--------|---------|
+| **Founded** | 2013 |
+| **Headquarters** | Nyon, Vaud, Switzerland |
+| **Legal Form** | SA (Public Limited Company) |
+| **Group** | Business-Koncept |
+| **Foreign Branch** | IT-Koncept Tunisia Sàrl (Tunis) |
+| **CEO** | Alain Lacroix (since Oct 2025) |
+| **COO** | Florian Frossard |
+| **Target Market** | Swiss SMEs (PME), private & public sector |
+| **Core Services** | IT outsourcing, ERP, CRM, custom dev, e-commerce, mobile apps, compliance |
+| **Key Partners** | Swisscom (Gold), Odoo, Efficy CRM |
+| **Capital** | CHF 500,000 |
+Aymen Alaya
+Directeur de projet/ (encardreur)

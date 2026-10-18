@@ -1,0 +1,1631 @@
+
+
+==================== PAGE 1 ====================
+
+iTeam University
+D´epartement G´enie Logiciel & Syst`emes
+d’Information
+RAPPORT DE STAGE DE FIN D’´ETUDES / PROJET
+D’ING ´ENIERIE
+EQUIPMENTMAINTENANCESCHEDULER
+Conception, D´eveloppement et Validation d’un Module
+Odoo 18 pour la Gestion de Maintenance Industrielle
+´Elabor´e par :
+Youssef BENYOUNES
+´Etudiant-Ing´enieur en Informatique
+Encadr´e par :
+M. Aymen ALAYA(Directeur de
+Projet / Encadrant Industriel)
+Mme Faten DRIDI(Encadrante
+Acad´emique)
+Organisme d’accueil :IT-Koncept SA / IT-Koncept Tunisia S `arl (Groupe
+Business-Koncept)
+Ann´ee Universitaire :Ann ´ee Universitaire 2025/2026
+
+==================== PAGE 2 ====================
+
+D´edicaces
+Je d´edie ce travail :
+`A mes tr`es chers parents,
+Pour leur amour inconditionnel, leurs sacrifices constants et leur soutien ind´efectible tout au
+long de mes ann´ees d’´etudes. Qu’ils trouvent ici le t´emoignage de ma profonde gratitude et de
+mon affection infinie.
+`A mes proches, mes fr`eres et sœurs,
+Pour leur pr´esence encourageante et leur confiance continue.
+`A toute l’´equipe technique et manag´eriale de l’organisme d’accueil,
+Pour leur accueil bienveillant, le partage d’exp´erience et leur collaboration stimulante.
+YoussefBENYOUNES
+
+==================== PAGE 3 ====================
+
+Remerciements
+Au terme de ce projet de fin d’´etudes et de stage d’ing´enieur, j’exprime ma profonde reconnais-
+sance `a toutes les personnes qui ont contribu´e, de pr`es ou de loin, `a son aboutissement dans les
+meilleures conditions.
+Je tiens tout d’abord `a remercier chaleureusement la direction et le corps enseignant de
+iTeam Universitypour la qualit´e de la formation dispens´ee tout au long de mon cursus d’ing´enieur.
+J’exprime toute ma gratitude `a la direction deIT-Koncept SAet de sa filialeIT-Koncept
+Tunisia S`arl(Groupe Business-Koncept), en particulier `a M. Alain LACROIX, Directeur G´en´eral,
+et M. Florian FROSSARD, Directeur Associ ´e, pour m’avoir ouvert leurs portes et fourni un en-
+vironnement d’ing´enierie stimulant, au cœur de l’expertise Odoo et de l’innovation logicielle.
+J’adresse mes vifs remerciements `a mon encadrant professionnel,M. Aymen ALAYA, Di-
+recteur de Projet / Encadrant Industriel, pour son accompagnement bienveillant, sa disponibilit´e
+constante, ses pr´ecieux conseils m´ethodologiques et son expertise pointue des architectures ERP
+et de l’´ecosyst`eme Odoo.
+Mes sinc `eres remerciements vont ´egalement `a mon encadrante acad ´emique,Mme Faten
+DRIDI, Encadrante Acad ´emique, pour ses orientations rigoureuses et ses remarques construc-
+tives tout au long de l’´elaboration de ce rapport.
+Enfin, je remercie les membres du jury pour le temps consacr ´e `a la lecture de ce document
+et pour l’honneur qu’ils me font en ´evaluant ce travail d’ing´enierie.
+
+==================== PAGE 4 ====================
+
+CONTENTS Youssef BENYOUNES
+Contents
+D´edicaces i
+Remerciements ii
+Contents v
+List of Figures vi
+List of Tables vii
+Introduction G´en´erale 1
+1 Contexte G ´en´eral et Cadre du Projet 4
+1.1 Introduction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4
+1.2 Pr ´esentation de l’Organisme d’Accueil . . . . . . . . . . . . . . . . . . . . . . 4
+1.2.1 Profil et Historique de IT-Koncept SA . . . . . . . . . . . . . . . . . . 4
+1.2.2 Filiale d’Ing ´enierie : IT-Koncept Tunisia S`arl . . . . . . . . . . . . . . 5
+1.2.3 Positionnement Strat ´egique et Partenariats d’Excellence . . . . . . . . 6
+1.3 Probl ´ematique Industrielle : Les D ´efis de la Gestion de Maintenance pour les
+PME . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7
+1.4 Objectifs du Projet . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 8
+1.5 D ´emarche M´ethodologique : M´ethodologie Agile/Scrum . . . . . . . . . . . . 9
+1.6 Conclusion . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10
+2 Analyse des Besoins et Conception Formelle 11
+2.1 Introduction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 11
+2.2 Identification des Acteurs du Syst `eme . . . . . . . . . . . . . . . . . . . . . . 11
+Page iii
+
+==================== PAGE 5 ====================
+
+CONTENTS Youssef BENYOUNES
+2.3 Sp ´ecification Exhaustive des Exigences . . . . . . . . . . . . . . . . . . . . . 12
+2.3.1 Exigences Fonctionnelles . . . . . . . . . . . . . . . . . . . . . . . . . 12
+2.3.2 Exigences Non-Fonctionnelles . . . . . . . . . . . . . . . . . . . . . . 14
+2.4 Mod ´elisation Formelle UML . . . . . . . . . . . . . . . . . . . . . . . . . . . 16
+2.4.1 Diagrammes de Cas d’Utilisation . . . . . . . . . . . . . . . . . . . . 16
+2.4.2 Diagramme de Classes Structurel . . . . . . . . . . . . . . . . . . . . 17
+2.4.3 Diagrammes de S ´equence Comportementaux . . . . . . . . . . . . . . 18
+2.5 Conclusion . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 18
+3 Architecture Syst `eme, Impl´ementation et Validation de Navigation 20
+3.1 Introduction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 20
+3.2 Architecture Syst `eme Multi-Niveaux et Couche BYO-LLM . . . . . . . . . . . 21
+3.2.1 Architecture de la Passerelle BYO-LLM et S ´ecurit´e des Outils . . . . . 21
+3.3 Inventaire Quantitatif du Code Source . . . . . . . . . . . . . . . . . . . . . . 22
+3.4 Sp ´ecification D´etaill´ee des Mod`eles de Donn´ees ORM . . . . . . . . . . . . . 22
+3.4.1 Analyse Approfondie des Mod `eles Cl´es . . . . . . . . . . . . . . . . . 22
+3.5 Algorithmique Avanc ´ee & Qualification R´ealiste de l’IA . . . . . . . . . . . . 25
+3.5.1 Classification R ´ealiste des Composants d’Intelligence Artificielle . . . 25
+3.5.2 Algorithme de Score de Sant ´e (Health Score) . . . . . . . . . . . . . . 25
+3.5.3 Pr ´ediction Statistique de D´efaillance (MTBF & MTTR) . . . . . . . . 26
+3.6 Validation de Navigation et Tests E2E sous Playwright . . . . . . . . . . . . . 26
+3.6.1 Mise en Place du Banc de Test Navigateur E2E . . . . . . . . . . . . . 26
+3.6.2 Couverture Compl `ete de la Navigation Inter-Vues . . . . . . . . . . . . 26
+3.6.3 Anomalies R ´eelles D´etect´ees et Corrig´ees par la Validation de Navigation 28
+3.7 T ´el´em´etrie d’Assurance Qualit´e et Preuves sur Disque . . . . . . . . . . . . . 29
+3.8 Conclusion . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 29
+4 Bilan du Projet et Retour d’Exp ´erience 30
+4.1 Introduction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 30
+4.2 Apports et Comp ´etences D´evelopp´ees . . . . . . . . . . . . . . . . . . . . . . 30
+4.2.1 Apports Techniques et d’Ing ´enierie Logicielle . . . . . . . . . . . . . . 30
+4.2.2 Apports M ´ethodologiques et Organisationnels . . . . . . . . . . . . . . 31
+4.2.3 Apports Humains et Professionnels . . . . . . . . . . . . . . . . . . . 32
+4.3 D ´efis Majeurs Rencontr´es et Solutions Apport´ees . . . . . . . . . . . . . . . . 32
+4.4 Conclusion . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 32
+Conclusion G´en´erale et Perspectives 34
+Page iv
+
+==================== PAGE 6 ====================
+
+CONTENTS Youssef BENYOUNES
+Annexes Techniques 37
+Webography 45
+Bibliography 45
+Page v
+
+==================== PAGE 7 ====================
+
+LIST OF FIGURES Youssef BENYOUNES
+List of Figures
+1 ´Ecosyst`eme institutionnel, technologique et organisationnel du projet . . . . . . 7
+2 Cycle de d ´eveloppement it´eratif et incr´emental Agile/Scrum . . . . . . . . . . 9
+3 Diagramme de cas d’utilisation g ´en´eral du syst`eme . . . . . . . . . . . . . . . 16
+4 Diagramme de cas d’utilisation d ´etaill´e du cycle d’intervention . . . . . . . . . 17
+5 Diagramme de classes du syst `eme de gestion de maintenance et d’IA . . . . . . 17
+6 Diagramme de s ´equence : Signalement d’une panne et cr´eation d’un ordre . . . 18
+7 Diagramme de s ´equence : Cl ˆoture de maintenance et recalcul du score . . . . . 19
+8 Architecture logicielle multi-niveaux du moduleequipment maintenance. . 21
+Page vi
+
+==================== PAGE 8 ====================
+
+LIST OF TABLES Youssef BENYOUNES
+List of Tables
+1 Inventaire exhaustif des artefacts logiciels et m ´etriques de code . . . . . . . . . 23
+2 Sp ´ecification des 16 mod`eles de donn´ees de l’architecture ORM . . . . . . . . 24
+3 Classification rigoureuse des fonctionnalit ´es d’intelligence artificielle . . . . . 25
+4 Synth `ese des 10 anomalies d’ergonomie et de navigation r´esolues par Playwright 28
+5 Matrice consolid ´ee de t´el´em´etrie d’assurance qualit´e logicielle . . . . . . . . . 29
+6 Synth `ese des d´efis techniques majeurs et des solutions d’ing´enierie appliqu´ees . 33
+Page vii
+
+==================== PAGE 9 ====================
+
+INTRODUCTION G ´EN ´ERALE Youssef BENYOUNES
+Introduction G´en´erale
+Dans le contexte industriel contemporain, la gestion efficace et pr ´edictive des actifs mat ´eriels
+constitue un pilier strat´egique pour la p´erennit´e op´erationnelle et la comp´etitivit´e financi`ere des
+entreprises. Les pannes inopin´ees d’´equipements entraˆınent non seulement des arrˆets de produc-
+tion coˆuteux et une d´egradation de la qualit´e de service, mais augmentent ´egalement de mani`ere
+exponentielle les d ´epenses de maintenance corrective d’urgence. Face `a cette r ´ealit´e, la trans-
+formation num´erique des processus de maintenance industrielle au sein des syst `emes int´egr´es
+de gestion (Enterprise Resource Planning - ERP) s’impose comme une n´ecessit´e imp´erieuse.
+Ce projet de fin d’ ´etudes et de stage d’ing ´enieur s’inscrit au cœur de cette probl ´ematique
+et a ´et´e r´ealis´e au sein de l’entreprise suisseIT-Koncept SAet de sa filiale de d ´eveloppement
+IT-Koncept Tunisia S`arl(Groupe Business-Koncept). L’objectif central de ce stage consiste
+en la conception, le d´eveloppement, la refactorisation et la validation op´erationnelle d’un mod-
+ule ERP complet d ´edi´e `a la gestion globale des ´equipements et `a l’ordonnancement intelligent
+de la maintenance : le moduleequipment maintenance, d ´evelopp´e sp ´ecifiquement pour la
+plateforme de nouvelle g´en´erationOdoo 18.0 Community.
+Le syst `eme conc ¸u adresse l’ensemble du cycle de vie des actifs industriels `a travers trois
+phases d’ing´enierie majeures :
+•Phase 1 (Cœur de Maintenance Industrielle): enregistrement d ´etaill´e du parc
+d’´equipements avec arborescence multi-sites, trac ¸abilit´e par codes QR, planification
+p´eriodique d’ordres pr´eventifs, traitement fluide des requˆetes de r´eparation d’urgence,
+Page 1
+
+==================== PAGE 10 ====================
+
+INTRODUCTION G ´EN ´ERALE Youssef BENYOUNES
+gestion fine des pi `eces de rechange consomm ´ees, contr ˆole des co ˆuts consolid ´es et
+g´en´eration de rapports vectoriels QWeb PDF.
+•Phase 2 (Analytique et D ´ecision Pr ´edictive): formulation math ´ematique d’un in-
+dice de sant´e dynamique (Equipment Health Score), pr ´ediction statistique des risques
+de d ´efaillance (MTBF/MTTR), projection budg ´etaire des co ˆuts de maintenance par
+moyennes mobiles pond´er´ees et conseil d’aide au remplacement de machines.
+•Phase 3 (Couche IA Conversationnelle & BYO-LLM): int ´egration d’une archi-
+tecture multi-fournisseurs (Google Gemini et Cerebras) permettant la journalisation
+d’interventions en langage naturel et l’interaction avec un assistant conversationnel in-
+telligent dot ´e d’une isolation stricte des outils et d’un flux de confirmation explicite
+pour les op´erations d’´ecriture.
+Afin de garantir une int ´egration robuste et p ´erenne dans l’ ´ecosyst`eme Odoo 18, ce pro-
+jet int `egre une d ´emarche rigoureuse d’ing ´enierie logicielle combinant la m ´ethodologie Ag-
+ile/Scrum, la mod ´elisation formelle UML, les principes du Clean Code, et une strat ´egie
+compl`ete d’assurance qualit ´e multi-niveaux. Cette strat ´egie associe une suite backend de138
+tests unitaires(100% de r ´eussite sur base saine),46 tests mockd’int ´egration LLM, des tests de
+validation d’API en direct, ainsi qu’une campagne de testsEnd-to-End(E2E) sous le framework
+Playwrightcomprenant32 tests automatis ´esvalidant l’ergonomie, la navigation inter-vues et
+les flux utilisateurs r´eels.
+Le pr ´esent rapport est articul ´e en quatre chapitres principaux suivis d’une conclusion et
+d’annexes techniques :
+•Chapitre 1 : Contexte G ´en´eral et Cadre du Projetpr ´esente le profil deIT-Koncept
+SAet de sa filiale tunisienne, formule les enjeux de la maintenance pour les PME
+industrielles, explicite les objectifs assign ´es et d ´etaille la d ´emarche m ´ethodologique
+Agile/Scrum adopt´ee.
+•Chapitre 2 : Analyse des Besoins et Conception Formelleexpose l’analyse ex-
+haustive des exigences fonctionnelles et non fonctionnelles (incluant la structure
+Page 2
+
+==================== PAGE 11 ====================
+
+INTRODUCTION G ´EN ´ERALE Youssef BENYOUNES
+g´eographique multi-sites et les exigences d’interface), formalise les cas d’utilisation
+par profil d’acteur et ´etablit les diagrammes conceptuels UML.
+•Chapitre 3 : Architecture Syst `eme, Impl ´ementation et Validationd ´etaille
+l’architecture logicielle multi-niveaux, la sp ´ecification des mod `eles ORM et de la
+couche BYO-LLM, les algorithmes pr ´edictifs, les 15 refactorisations critiques sous
+Odoo 18, ainsi que la t ´el´em´etrie compl`ete d’assurance qualit ´e (138 tests backend, 46
+tests mock, tests live API, et la suite compl`ete de 32 tests de navigation et de vues sous
+Playwright avec capture de vid´eos de d´emonstration).
+•Chapitre 4 : Bilan du Projet et Retour d’Exp ´eriencedresse le bilan technique, or-
+ganisationnel et humain du stage, analyse les comp´etences d´evelopp´ees et met en relief
+les solutions apport´ees aux d´efis majeurs rencontr´es durant la migration, la s´ecurisation
+des LLM et l’automatisation des tests navigateur.
+Enfin, une conclusion g ´en´erale synth´etise les apports scientifiques et professionnels de ce
+travail et trace les perspectives d’ ´evolution future vers la maintenance pr ´edictive assist´ee par
+l’Internet des Objets (IoT) et l’apprentissage automatique supervis´e.
+Page 3
+
+==================== PAGE 12 ====================
+
+CHAPTER 1. CONTEXTE G ´EN ´ERAL ET CADRE DU PROJETYoussef BENYOUNES
+Chapter
+1
+Contexte G´en´eral et Cadre du Projet
+1.1Introduction
+Ce premier chapitre ancre le projet dans son environnement professionnel, ´economique et
+acad´emique. Nous pr ´esentons de mani`ere approfondie l’organisme d’accueil, la soci ´et´e suisse
+IT-Koncept SA, ainsi que son centre d’ing ´enierie et de d ´eveloppementIT-Koncept Tunisia
+S`arl. Nous analysons ensuite les enjeux contemporains li ´es `a la maintenance industrielle
+et `a la gestion des actifs physiques pour les Petites et Moyennes Entreprises (PME). Enfin,
+nous formalisons la probl´ematique op´erationnelle, les objectifs assign´es `a ce stage d’ing´enieur
+et la d ´emarche m ´ethodologique Agile/Scrum adopt ´ee pour concevoir et valider le module
+equipment maintenance.
+1.2Pr ´esentation de l’Organisme d’Accueil
+1.2.1 Profil et Historique de IT-Koncept SA
+Fond´ee en 2013 et immatricul ´ee au Registre du Commerce suisse sous le num ´ero
+d’identification des entreprisesCHE-229.451.519,IT-Koncept SAest une soci ´et´e anonyme
+suisse de services et de conseil informatiques de r´ef´erence. Elle fait partie int´egrante du groupe
+Business-Koncept.
+Page 4
+
+==================== PAGE 13 ====================
+
+CHAPTER 1. CONTEXTE G ´EN ´ERAL ET CADRE DU PROJETYoussef BENYOUNES
+Initialement ´etablie `a Mies dans le canton de Vaud, l’entreprise a transf ´er´e son si `ege so-
+cial auRoute du Stand 68, 1260 Nyon (Suisse)en septembre 2023 afin d’accompagner sa
+forte croissance. Ayant c´el´ebr´e ses 10 ann´ees d’activit´e en mars 2024, la structure dispose d’un
+capital-actions port´e `a500 000 CHF, t ´emoignant d’une assise financi`ere solide et d’un engage-
+ment constant dans l’investissement technologique et l’innovation num´erique.
+La gouvernance et la direction g ´en´erale de l’entreprise s’articulent autour de dirigeants
+chevronn´es :
+•M. Alain Lacroix(Directeur G ´en´eral / CEO) : fort de plus de 35 ans d’exp ´erience
+dans les technologies de l’information, la conduite de grands projets de transformation
+num´erique et l’expertise en protection des donn´ees (LPD suisse / RGPD europ´een) ;
+•M. Florian Frossard(Directeur Associ ´e / COO & Administrateur-Pr´esident) : cofon-
+dateur, garant de l’excellence op ´erationnelle et du d ´eploiement strat ´egique des solu-
+tions applicatives ;
+•M. Aymen Alaya(Directeur de Projet / Encadrant Industriel) : pilote des architectures
+logicielles et de l’encadrement technique des projets d’int´egration ERP.
+1.2.2 Filiale d’Ing ´enierie : IT-Koncept Tunisia S`arl
+Pour soutenir sa comp´etitivit´e internationale et disposer d’un pˆole d’ing´enierie logicielle d’´elite,
+IT-Koncept op`ere `a travers sa filiale tunisienneIT-Koncept Tunisia S `arl, implant´ee au10 Av-
+enue Abderrahmen Azzam, 1073 Bab El Bhar, Tunis.
+Cette filiale constitue un v ´eritable centre de recherche, d ´eveloppement et livraison logi-
+cielle (Delivery Center) en synergie directe avec les op ´erations suisses. Elle regroupe des
+ing´enieurs hautement qualifi ´es sp ´ecialis´es dans le framework open-sourceOdoo, intervenant
+sur le d ´eveloppement modulaire avanc ´e, la refactorisation d’architectures d’entreprise, ainsi
+que l’int ´egration de progiciels pour la comptabilit ´e, les ressources humaines, la gestion des
+stocks, le CRM et la gestion de production.
+Page 5
+
+==================== PAGE 14 ====================
+
+CHAPTER 1. CONTEXTE G ´EN ´ERAL ET CADRE DU PROJETYoussef BENYOUNES
+1.2.3 Positionnement Strat ´egique et Partenariats d’Excellence
+IT-Koncept se positionne comme un partenaire informatique global (End-to-End IT Part-
+ner), capable d’adresser l’ensemble des besoins num ´eriques d’une organisation, ´evitant ainsi
+le morcellement des prestataires. Son offre s’organise autour de p ˆoles de comp ´etences
+compl´ementaires :
+•Solutions ERP d’Entreprise: Partenaire officielOdoofort de plus de 8 ann ´ees
+d’expertise continue (de la version V7 `a la version V18) sur des architectures mod-
+ulaires complexes, combin´e `a des progiciels m´etier propri´etaires ;
+•Gestion de la Relation Client (CRM): Int ´egrateur officiel certifi ´e en Suisse pour
+Efficy CRM, avec interconnexion temps r´eel aux syst`emes ERP ;
+•Infrastructures Informatiques & Services Manag ´es: Partenaire certifi ´eSwisscom
+Gold, assurant l’infog´erance de parcs serveurs, les r´eseaux d’entreprise et les solutions
+Smart ICT ;
+•Conformit ´e et S ´ecurit´e des Donn ´ees: Accompagnement sp ´ecialis´e pour la mise en
+conformit´e avec la nouvelle Loi suisse sur la Protection des Donn ´ees (nLPD) et le
+RGPD ;
+•Comptabilit ´e Digitale: Prestations de gestion financi `ere et administrative digitalis´ee
+sous la marque d´edi´eeAC-Koncept.
+L’entreprise dessert principalement les PME suisses de Suisse romande (bassins de Nyon,
+Gen`eve et canton de Vaud) ainsi que des institutions publiques et priv ´ees d’envergure. Parmi
+ses r´ef´erences notables figurent leGen `eve-Servette Hockey Club,ArsPanis Suisse SA (Panino
+Giusto),Securelec,Areas Gen `eve,Swisscom,Migros,Fnac,BBGI Group,Swiss Language
+GroupetPerrin Holding.
+La devise strat´egique de l’entreprise r´esume sa vision :
+≪ Conjuguer innovation, qualit´e et s´ecurit´e num´erique pour bˆatir l’avenir avec nos
+clients et partenaires. ≫
+Page 6
+
+==================== PAGE 15 ====================
+
+CHAPTER 1. CONTEXTE G ´EN ´ERAL ET CADRE DU PROJETYoussef BENYOUNES
+Projet
+Equipment
+Maintenance
+IT-Koncept SA
+Strat´egie, Si`ege Nyon & PME
+IT-Koncept Tunisia S`arl
+Pˆole R&D & Ing´enierie Odoo
+iTeam University
+Encadrement Acad´emique
+´Ecosyst`eme Odoo 18
+Partenaire Officiel & ORM
+Figure 1. ´Ecosyst`eme institutionnel, technologique et organisationnel du projet
+1.3Probl ´ematique Industrielle : Les D ´efis de la Gestion de
+Maintenance pour les PME
+Pour les PME industrielles et de services g ´erant des parcs d’ ´equipements h´et´erog`enes (lignes
+d’assemblage, serveurs, parcs machines, outillages techniques), la maintenance repr ´esente un
+centre de coˆut critique et un enjeu direct de comp´etitivit´e. L’analyse des processus existants met
+en exergue cinq d´efaillances majeures :
+1. Pr ´edominance de la maintenance corrective d’urgence: Sans outil
+d’ordonnancement automatis ´e, les interventions s’effectuent apr `es la panne (run-
+to-failure), entraˆınant des arr ˆets de production non planifi ´es (Unscheduled Downtime)
+dont le coˆut horaire peut d´epasser plusieurs milliers de francs suisses.
+2. Complexit ´e de la gestion g ´eographique multi-sites: Les entreprises exploitent
+fr´equemment des actifs diss ´emin´es sur plusieurs sites g ´eographiques, bˆatiments, ´etages
+et baies techniques. L’absence d’une hi ´erarchie spatiale rigoureuse p´enalise la localisa-
+tion rapide des ´equipements lors des interventions.
+Page 7
+
+==================== PAGE 16 ====================
+
+CHAPTER 1. CONTEXTE G ´EN ´ERAL ET CADRE DU PROJETYoussef BENYOUNES
+3. Difficult ´e d’identification et de trac ¸abilit´e terrain: Les techniciens de maintenance
+perdent un temps substantiel `a identifier les machines sur place et`a consulter les manuels
+techniques et historiques de pannes.
+4. Manque de synchronisation des pi `eces de rechange: Les pi `eces de maintenance sont
+souvent consomm ´ees sans d ´ecr´ementation automatique des inventaires ERP, g ´en´erant
+des ruptures de stock inopin´ees et une m´econnaissance du coˆut de revient r´eel de chaque
+intervention.
+5. Absence d’aide pr ´edictive `a la d ´ecision et d’assistance moderne: Les respons-
+ables d’exploitation manquent d’indicateurs synth ´etiques d’usure (scores de sant ´e), de
+pr´evisions de pannes et d’outils interactifs permettant aux techniciens de consigner des
+rapports en langage naturel directement depuis le terrain.
+1.4Objectifs du Projet
+Pour r´epondre `a ces exigences d’ing´enierie et doter IT-Koncept d’un module de pointe pour ses
+clients industriels, le projet a ´et´e structur´e autour des objectifs op´erationnels suivants :
+•Registre Centralis ´e et Gestion Multi-Sites: Mod ´elisation compl`ete des ´equipements
+avec arborescence g´eographique stricte (Site→B ˆatiment→ ´Etage→Salle→Baie),
+suivi des garanties et g´en´eration dynamique de codes QR vectoriels pour identification
+mobile instantan´ee.
+•Ordonnancement Pr ´eventif et Workflow Correctif: Automatisation de la
+g´en´eration p ´eriodique d’ordres de travail par des t ˆaches planifi ´ees d’arri `ere-plan
+(ir.cron) et traitement structur´e des demandes d’intervention d’urgence.
+•Ma ˆıtrise des Stocks et Trac ¸abilit´e Financi`ere: Liaison directe avec le module stan-
+dard de gestion des stocks d’Odoo (stock) pour imputer la consommation des pi `eces
+et calculer automatiquement les coˆuts consolid´es de chaque intervention.
+•Algorithmique Pr ´edictive et D ´ecisionnelle (Phase 2): ´Elaboration d’un indice de
+sant´e dynamique (Health Score), calcul d’un score de risque de d ´efaillance multi-
+Page 8
+
+==================== PAGE 17 ====================
+
+CHAPTER 1. CONTEXTE G ´EN ´ERAL ET CADRE DU PROJETYoussef BENYOUNES
+crit`ere, projection budg ´etaire par moyennes mobiles pond ´er´ees et conseil technico-
+´economique au remplacement d’´equipement.
+•Couche d’IA Conversationnelle & BYO-LLM (Phase 3): Conception d’une
+passerelle multi-fournisseurs (Google Gemini et Cerebras) permettant la journalisa-
+tion en langage naturel et l’assistance conversationnelle avec validation explicite des
+´ecritures et isolation stricte des outils.
+•Assurance Qualit ´e et Validation de Navigation (Phase Finale): Couverture
+compl`ete par 138 tests backend, 46 tests mock LLM, tests d’API en direct et une
+suite E2E Playwright de 32 tests validant l’ensemble des vues et flux de navigation
+utilisateurs.
+1.5D ´emarche M´ethodologique : M´ethodologie Agile/Scrum
+Afin de garantir une adaptation continue aux exigences techniques et assurer une collaboration
+´etroite avec l’encadrant industriel de IT-Koncept, le projet a ´et´e conduit selon la m ´ethodologie
+Agile/Scrum.
+Sprint 1
+Mod´elisation ORM
+& Multi-Sites
+Sprint 2
+Logique M´etier
+Workflows & Vues
+Sprint 3
+Analytique &
+Couche BYO-LLM
+Sprint 4
+Refactorisation v18
+& Tests E2E / DevOps
+Sch´ema DB & Emplacements Ordres, Pi`eces & QR Health Score & Assistant Suite E2E & Backend Valid´es
+Figure 2.Cycle de d ´eveloppement it´eratif et incr´emental Agile/Scrum
+Le d´ecoupage du projet s’est articul´e autour de quatre sprints successifs de deux semaines :
+•Sprint 1 (Fondations, Mod `eles de Donn ´ees et Multi-Sites): D ´efinition
+des entit ´es m ´etier du module, mod ´elisation de l’arborescence multi-sites
+(equipment.location), matrice de s´ecurit´e CSV et registre des ´equipements.
+Page 9
+
+==================== PAGE 18 ====================
+
+CHAPTER 1. CONTEXTE G ´EN ´ERAL ET CADRE DU PROJETYoussef BENYOUNES
+•Sprint 2 (Workflows M ´etier, Pi `eces de Rechange et Vues UI): Impl ´ementation
+du cycle de vie des ordres, int ´egration du stock de pi `eces, check-lists d’inspection,
+g´en´erateur de codes QR et conception des vues Kanban et formulaires.
+•Sprint 3 (Analytique D ´ecisionnelle, Health Score et Couche BYO-LLM):
+Int´egration de la formule multicrit`ere de l’indice de sant´e, algorithmes pr´edictifs statis-
+tiques et impl´ementation de l’interface d’IA g ´en´erative (fournisseurs Gemini et Cere-
+bras, journalisation en langage naturel et assistant conversationnel avec confirmation
+explicite).
+•Sprint 4 (Refactorisation Odoo 18, Tests Backend et Tests E2E de Navigation)
+: Application des 15 correctifs de compatibilit ´e Odoo 18, d ´eveloppement de la suite
+backend de 138 tests unitaires, validation mock et live des LLM, et d ´eploiement de la
+campagne de tests Playwright de 32 sc ´enarios de navigation et d’interface utilisateur
+en environnement Docker conteneuris´e.
+1.6Conclusion
+Ce chapitre a expos´e les fondements institutionnels, industriels et m´ethodologiques du projet, en
+mettant en avant le positionnement deIT-Koncept SAet l’apport d’ing ´enierie deIT-Koncept
+Tunisia S `arl. L’identification pr ´ecise des besoins des PME suisses a permis d’orienter le
+d´eveloppement vers une solution int´egr´ee `a forte valeur ajout´ee. Le chapitre suivant pr´esentera
+l’analyse approfondie des exigences et la mod´elisation formelle du syst`eme.
+Page 10
+
+==================== PAGE 19 ====================
+
+CHAPTER 2. ANALYSE DES BESOINS ET CONCEPTION FORMELLE Youssef BENYOUNES
+Chapter
+2
+Analyse des Besoins et Conception
+Formelle
+2.1Introduction
+L’analyse des besoins et la mod ´elisation conceptuelle constituent la clef de vo ˆute du
+d´eveloppement d’un module ERP industriel. Cette ´etape permet d’abstraire les flux
+op´erationnels de maintenance observ ´es sur le terrain au sein des PME clientes deIT-Koncept
+SA, et de les structurer en exigences fonctionnelles, non fonctionnelles et mod`eles d’ing´enierie
+logicielle. Ce chapitre d ´etaille l’identification des profils d’acteurs, la sp ´ecification des ex-
+igences m ´etier et d’interface de navigation, ainsi que la mod ´elisation formelle UML (dia-
+grammes de cas d’utilisation, diagramme de classes enrichi et diagrammes de s´equence).
+2.2Identification des Acteurs du Syst `eme
+L’exploitation du moduleequipment maintenanceimplique cinq profils d’utilisateurs aux
+responsabilit´es hi´erarchis´ees :
+•Visiteur / Lecteur (Viewer): Utilisateur en consultation seule, habilit ´e `a visualiser la
+liste des ´equipements, l’arborescence des emplacements et les tableaux de bord sans
+droit de modification.
+Page 11
+
+==================== PAGE 20 ====================
+
+CHAPTER 2. ANALYSE DES BESOINS ET CONCEPTION FORMELLE Youssef BENYOUNES
+•Op ´erateur de Machine (Operator): Personnel de production sur site, capable de
+scanner les QR codes appos ´es sur les ´equipements et de consigner des demandes
+d’intervention d’urgence (Repair Requests).
+•Technicien de Maintenance (Technician): Sp ´ecialiste ex´ecutant les ordres curatifs
+et pr ´eventifs. Il navigue entre ses ordres affect ´es, valide les check-lists, d ´eclare les
+pi`eces de rechange consomm´ees, utilise la journalisation en langage naturel et cl ˆoture
+les ordres de travail.
+•Responsable de Maintenance (Maintenance Manager): Gestionnaire assurant la
+planification pr´eventive, l’arbitrage des priorit´es, l’affectation des techniciens, le suivi
+des stocks de pi`eces d´etach´ees et l’analyse des projections budg´etaires et de fiabilit´e.
+•Administrateur Syst `eme (Administrator): Super-utilisateur assurant la configura-
+tion g´en´erale, la gestion des cl ´es d’API des fournisseurs LLM (Gemini/Cerebras), la
+surveillance de la piste d’audit des pr´edictions et le param´etrage des acc`es de s´ecurit´e.
+2.3Sp ´ecification Exhaustive des Exigences
+2.3.1 Exigences Fonctionnelles
+Les exigences fonctionnelles du syst`eme sont organis´ees en huit piliers op´erationnels :
+EF1. Gestion Centralis ´ee du Registre des ´Equipements:
+• Fiche signal ´etique compl `ete (num ´ero de s ´erie, mod `ele, constructeur, date
+d’acquisition, valeur d’achat, fin de garantie, statut op´erationnel).
+• Classification arborescente par familles et cat ´egories d’ ´equipements avec
+fr´equences de r´evision par d´efaut.
+• G ´en´eration automatique et t ´el´echargement d’un code QR vectoriel unique pour
+identification mobile instantan´ee.
+EF2. Gestion G ´eographique Multi-Sites et Hi´erarchie Spatiale:
+Page 12
+
+==================== PAGE 21 ====================
+
+CHAPTER 2. ANALYSE DES BESOINS ET CONCEPTION FORMELLE Youssef BENYOUNES
+• Mod ´elisation arborescente stricte des emplacements physiques :Site g ´eographie
+→B ˆatiment→ ´Etage→Salle / Atelier→Baie / Emplacement sp ´ecifique.
+• Affectation pr ´ecise de chaque machine dans la hi ´erarchie spatiale pour optimiser
+les temps d’intervention des techniciens.
+EF3. Planification et Ordonnancement Pr ´eventif Automatis´e:
+• D ´efinition de mod`eles de maintenance (Maintenance Templates) r´eutilisables avec
+p´eriodicit´es configurables (jours, semaines, mois, ann´ees).
+• Moteur de g ´en´eration automatique d’ordres pr ´eventifs synchronis ´e avec
+l’ordonnanceur d’Odoo (ir.cron).
+• Suivi des dates d’ ´ech´eance avec alertes visuelles de d´epassement.
+EF4. Demandes de R ´eparation et Maintenance Corrective:
+• Formulaire simplifi ´e de d ´eclaration de panne avec qualification des sympt ˆomes et
+niveau d’urgence.
+• Conversion en un clic d’une demande valid ´ee en Ordre de Maintenance officiel
+sans ressaisie.
+EF5. Ex ´ecution des Ordres de Travail et Protocoles d’Inspection:
+• Gestion rigoureuse du cycle de vie des ordres selon la machine d’´etats d´eterministe
+:Draft→Confirmed→In Progress→Done / Cancelled.
+• Int ´egration de check-lists normalis ´ees avec contr ˆole obligatoire pas- `a-pas des
+points de v´erification.
+EF6. Consommation de Pi `eces de Rechange et Suivi des Coˆuts:
+• Consignation des pi `eces consomm´ees avec synchronisation temps r ´eel des stocks
+(stock.quant).
+• Calcul dynamique et transparent du co ˆut mati`ere, du co ˆut de main-d’œuvre et du
+coˆut total consolid´e.
+EF7. Navigation Ergonomique et Vues Multi-Modalit ´es:
+Page 13
+
+==================== PAGE 22 ====================
+
+CHAPTER 2. ANALYSE DES BESOINS ET CONCEPTION FORMELLE Youssef BENYOUNES
+• Navigation par cartes Kanban enrichies (t-name="card") avec indicateurs visuels
+d’´etat et badges couleur.
+• Navigation en liste group ´ee avec support du pliage/d ´epliage dynamique conforme
+au nouveau framework Odoo 18.
+• Navigation formulaire intuitive dot ´ee d’un fil d’Ariane (breadcrumbs), d’une barre
+de statut d’´etapes et d’un volet d’activit´es (chatter).
+• Vues de planification par calendrier, analyses graphiques (barres, camemberts) et
+tableaux crois´es dynamiques (vues Pivot).
+• Tableaux de bord synth ´etiques interactifs avec drill-down imm ´ediat vers les
+mat´eriels critiques ou les ordres en retard.
+EF8. Aide Pr ´edictive et Couche Conversationnelle BYO-LLM:
+• Calcul multicrit `ere de l’indice de sant ´e (Health Scoresur 100), pr ´ediction statis-
+tique des risques de d´efaillance (MTBF/MTTR) et projection budg´etaire des coˆuts
+futurs.
+• Assistant conversationnel et journalisation en langage naturel : extraction automa-
+tique des entit ´es ( ´equipement, sympt ˆomes, pi `eces de rechange) via LLM (Gem-
+ini/Cerebras).
+• Workflow de confirmation explicite pour les op ´erations d’ ´ecriture : affichage
+d’un aperc ¸u avant validation manuelle et consignation dans la table d’audit
+(equipment.ai.prediction).
+2.3.2 Exigences Non-Fonctionnelles
+Afin d’assurer une robustesse logicielle r ´epondant aux standards suisses d’ing ´enierie et aux
+exigences d’IT-Koncept, les contraintes suivantes sont impos´ees :
+•S ´ecurit´e et Isolation des Outils LLM: Le mod `ele d’intelligence artificielle ne dis-
+pose d’aucun acc `es direct aux couches SQL, ORM, shell ou syst `eme de fichiers. Les
+Page 14
+
+==================== PAGE 23 ====================
+
+CHAPTER 2. ANALYSE DES BESOINS ET CONCEPTION FORMELLE Youssef BENYOUNES
+op´erations s’ex´ecutent exclusivement via des fonctions d’outils strictement typ ´ees et
+contrˆol´ees par les droits d’acc`es Odoo (ir.model.accesset r `egles au niveau ligne).
+•Confidentialit ´e des Cl ´es d’API: Stockage chiffr ´e des cl ´es (password=True), re-
+streint au groupe d’administration, sans jamais figurer dans les logs, rapports ou
+requˆetes clientes.
+•Performance et Temps de R ´eponse: R ´eponses aux requˆetes de consultation en moins
+de 250 ms gr ˆace `a un indexage optimis ´e des cl ´es ´etrang`eres et l’usage de requ ˆetes
+group´ees performantes ( read group).
+•Conformit ´e Stricte Odoo 18: ´Elimination totale des attributs et m´ethodes d´epr´eci´ees
+(adaptation du standard d´eclaratif OWL et des nouvelles structures de stockage).
+•Testabilit ´e Compl`ete: Couverture des fonctionnalit ´es par une triple couche de tests :
+tests unitaires backend, tests mock d’int´egration et tests E2E automatisant la navigation
+dans un navigateur Chromium r´eel.
+Page 15
+
+==================== PAGE 24 ====================
+
+CHAPTER 2. ANALYSE DES BESOINS ET CONCEPTION FORMELLE Youssef BENYOUNES
+2.4Mod ´elisation Formelle UML
+2.4.1 Diagrammes de Cas d’Utilisation
+a) Vue G ´en´erale des Cas d’Utilisation du Syst`eme
+La figure 3 formalise les interactions globales entre les acteurs et les grands modules appli-
+catifs du syst`eme.
+Syst`eme Equipment Maintenance Scheduler (IT-Koncept SA)
+Op´erateur
+Technicien
+Responsable
+Maintenance
+Administrateur
+Scanner QR Code´Equipement
+Signaler Panne (Repair Request)
+G´erer Ordres & Check-lists
+Journalisation en Langage Naturel
+Consommer Pi`eces de Rechange
+Ordonnancer Plans Pr´eventifs
+Consulter Analytique & Pr´edictif
+Configurer Cl´es LLM & Piste d’Audit
+S’authentifier
+Figure 3.Diagramme de cas d’utilisation g ´en´eral du syst`eme
+b) Cas d’Utilisation D ´etaill´e : Gestion des Ordres et Confirmation ´Ecriture
+La figure 4 explicite le cycle d’ex´ecution d’une intervention avec pr´evisualisation et confir-
+mation.
+Page 16
+
+==================== PAGE 25 ====================
+
+CHAPTER 2. ANALYSE DES BESOINS ET CONCEPTION FORMELLE Youssef BENYOUNES
+Gestion des Ordres et Interactions Intelligentes
+Responsable
+Maintenance
+Technicien
+Cr´eer / Confirmer Ordre
+Assigner Technicien
+Dicter Journal (NL Logger)
+Consommer Pi`eces D´etach´ees
+Clˆoturer Ordre (Done)
+Pr´evisualiser & Confirmer
+Calculer Coˆut Consolid´e
+Recalculer Health Score
+Figure 4.Diagramme de cas d’utilisation d ´etaill´e du cycle d’intervention
+2.4.2 Diagramme de Classes Structurel
+Le diagramme de classes de la figure 5 synth ´etise les entit ´es maˆıtresses de l’ORM d’Odoo
+18, leurs attributs distinctifs et leurs relations d’association et de composition, incluant
+l’arborescence g´eographique multi-sites (equipment.location) et la table de pr´ediction/audit
+(equipment.ai.prediction).
+EquipmentCategory
++ name : Char
++ code : Char
++ parentid : Many2one
++ maintenancefrequency : Inte-
+ger
++ equipmentcount : Integer
+EquipmentLocation
++ name : Char
++ completename : Char
++ locationtype : Selection
++ parentid : Many2one
++ siteid : Many2one
++ equipmentcount : Integer
+EquipmentEquipment
++ name : Char
++ serialno : Char
++ categoryid : Many2one
++ locationid : Many2one
++ state : Selection
++ healthscore : Float
++ purchasedate : Date
++ warrantyenddate : Date
++ qrcode : Binary
+EquipmentAIPrediction
++ equipmentid : Many2one
++ predictiontype : Selection
++ failureriskscore : Float
++ predictedfailuredate : Date
++ prompttokens : Integer
++ executionstatus : Selection
+MaintenanceOrder
++ name : Char (Sequence)
++ equipmentid : Many2one
++ ordertype : Selection
++ priority : Selection
++ state : Selection
++ durationhours : Float
++ totalpartscost : Monetary
++ totalcost : Monetary
+SparePartLine
++ orderid : Many2one
++ productid : Many2one
++ quantity : Float
++ unitcost : Float
++ subtotalcost : Float
+1..* regroupe
+1..* h´eberge
+1..* subit
+1..* historise
+1..* consomme
+Figure 5.Diagramme de classes du syst `eme de gestion de maintenance et d’IA
+Page 17
+
+==================== PAGE 26 ====================
+
+CHAPTER 2. ANALYSE DES BESOINS ET CONCEPTION FORMELLE Youssef BENYOUNES
+2.4.3 Diagrammes de S ´equence Comportementaux
+a) Sc ´enario 1 : Signalement de Panne et Cr´eation d’Ordre de Maintenance
+La figure 6 d´etaille les ´echanges intervenant depuis le signalement d’un dysfonctionnement
+par un op´erateur via code QR jusqu’`a l’assignation d’un technicien.
+Op´erateur Odoo Web (OWL) ORM Odoo 18 PostgreSQL Responsable
+1. Scan QR Code & Soumet Panne
+2. create(vals) ‘repair.request‘
+3. INSERT INTO repairrequest
+4. Notification / Mail Activity
+5. actioncreatemaintenanceorder()
+6. Instanciation ‘equipment.maintenance.order‘
+7. INSERT INTO maintenanceorder
+8. Vue Formulaire Ordre Ouverte
+Figure 6.Diagramme de s ´equence : Signalement d’une panne et cr´eation d’un ordre
+b) Sc ´enario 2 : Cl ˆoture d’Intervention, Consommation de Pi `eces et Recalcul du Health
+Score
+La figure 7 mod´elise l’ach`evement d’un ordre de travail avec imputation des coˆuts et mise `a
+jour dynamique du score de sant´e.
+2.5Conclusion
+Ce chapitre a permis d’´etablir les fondations conceptuelles de la solution logicielle en int´egrant
+les contraintes multi-sites, les exigences ergonomiques de navigation multi-vues et la s ´ecurit´e
+d’isolation de la couche BYO-LLM. Le chapitre 3 se consacrera `a l’architecture syst `eme, `a
+Page 18
+
+==================== PAGE 27 ====================
+
+CHAPTER 2. ANALYSE DES BESOINS ET CONCEPTION FORMELLE Youssef BENYOUNES
+Technicien Odoo Web Client Logique ORM / Module PostgreSQL
+1. Coche Check-list & Saisie Pi`eces
+2. actionmarkdone()
+3. UPDATE stockquant (Mouvement Stock)
+computetotalcost()
+computehealthscore()
+4. UPDATE equipment SET healthscore = X
+5. Ordre Marqu´e Fait (Statut Done)
+Figure 7.Diagramme de s ´equence : Cl ˆoture de maintenance et recalcul du score
+l’impl´ementation technique sous Odoo 18, ainsi qu’aux m ´ecanismes approfondis de test et de
+validation de navigation.
+Page 19
+
+==================== PAGE 28 ====================
+
+CHAPTER 3. ARCHITECTURE SYST `EME, IMPL ´EMENTATION ET
+VALIDATION DE NAVIGATION Youssef BENYOUNES
+Chapter
+3
+Architecture Syst `eme,
+Impl´ementation et Validation de Navi-
+gation
+3.1Introduction
+Apr`es avoir formalis ´e les exigences et la conception conceptuelle, ce chapitre expose la
+r´ealisation logicielle et l’assurance qualit ´e int ´egrale du moduleequipment maintenance,
+d´evelopp´e pourIT-Koncept SA. Nous d ´etaillons l’architecture multi-niveaux sous Odoo 18,
+l’inventaire quantitatif du code, la sp ´ecification approfondie des mod `eles de donn ´ees ORM,
+les algorithmes pr ´edictifs statistiques et la couche d’intelligence artificielle conversationnelle
+BYO-LLM (Google Gemini et Cerebras). Nous consacrons une section majeure `a la strat ´egie
+de **tests E2E de navigation et d’interface utilisateur sous Playwright**, mettant en lumi`ere la
+validation rigoureuse des vues (Kanban, listes group ´ees, formulaires, calendrier, multi-sites,
+wizards modaux) et les dix anomalies d’ergonomie et de navigation r ´esolues. Enfin, nous
+pr´esentons la t ´el´em´etrie compl`ete attestant de la r ´eussite de 138 tests backend, 46 tests mock
+LLM, tests live d’API et 32 tests de navigation Playwright.
+Page 20
+
+==================== PAGE 29 ====================
+
+CHAPTER 3. ARCHITECTURE SYST `EME, IMPL ´EMENTATION ET
+VALIDATION DE NAVIGATION Youssef BENYOUNES
+3.2Architecture Syst `eme Multi-Niveaux et Couche BYO-LLM
+Le progiciel s’appuie sur une architecture logicielle modulaire en quatre couches, augment ´ee
+d’un banc de test automatis ´e de navigation de bout en bout, tel que sch ´ematis´e dans la figure
+??.
+Couche Pr´esentation (Odoo Web Client & Validation Navigation)
+Vues XML Odoo 18
+(Card / List / Form)
+Framework OWL
+(Composants JS)
+G´en´erateur QR Code
+& Rapports QWeb PDF
+Banc Playwright E2E
+(Validation Navigation)
+Couche M´etier, Pr´edictif & BYO-LLM (Python 3.12 / ORM Odoo 18)
+Mod`eles M´etier
+& Multi-Sites
+Moteurs d’ ´Etats
+& Workflows
+Algorithmes Sant´e
+& Risque MTBF
+Couche BYO-LLM
+(Gemini / Cerebras)
+Couche Donn´ees & Persistance (PostgreSQL 15+)
+Tables Relationnelles ORM Contraintes Int´egrit´e & Triggers Row-Level Security (ACL & Rules)
+Couche Int´egration, Automatisation & APIs Externes
+Tˆaches Cron
+(ir.cron scheduler)
+API JSON-RPC
+/ Chatter Mail
+API REST Google Gemini
+& API Cerebras
+Docker Engine
+& WSL Runner
+Figure 8.Architecture logicielle multi-niveaux du moduleequipment maintenance
+3.2.1 Architecture de la Passerelle BYO-LLM et S ´ecurit´e des Outils
+Pour doter le progiciel de fonctionnalit´es d’assistance conversationnelle et de journalisation en
+langage naturel sans compromettre la s ´ecurit´e, une passerelleBYO-LLM(Bring Your Own
+Large Language Model) a ´et´e impl´ement´ee (equipment llm providers.py).
+Elle d ´efinit une classe de base abstraiteLLMProviderexposant une interface normalis ´ee
+(generate(),chat(),structured output(),test connection()) impl ´ement´ee pour
+deux fournisseurs distincts :
+a. Google Gemini(GeminiProvider) : utilise le mod `ele de derni `ere g ´en´eration
+gemini-2.5-flashvia l’API REST officielle Google Cloud, avec authentification par
+cl´e d’API prot´eg´ee et support natif du sch´ema JSON strict pour les sorties structur´ees.
+Page 21
+
+==================== PAGE 30 ====================
+
+CHAPTER 3. ARCHITECTURE SYST `EME, IMPL ´EMENTATION ET
+VALIDATION DE NAVIGATION Youssef BENYOUNES
+b. Cerebras(CerebrasProvider) : s’interface avec l’API haute vitesse compatible Ope-
+nAI via jeton Bearer pour une ex´ecution ultra-rapide.
+Le flux de traitement garantit l’isolation absolue des donn´ees d’entreprise :
+Entr´ee Utilisateur→LLM→Validation Sch ´ema JSON→Routage d’Outil Contr ˆol´e→Pr ´evisualisation→Confirmation→Audit
+(3.1)
+Le mod`ele LLM ne disposed’aucun acc `es `a SQL, au shell du conteneur, `a l’ORM ou au
+syst`eme de fichiers. Il g ´en`ere uniquement des appels vers une table fig ´ee d’outils autoris ´es
+(get equipment,create order,list orders,check parts), dont l’ex´ecution est soumise
+aux r`egles de s ´ecurit´e Odoo (ir.model.access.csv). Pour toute op ´eration d’´ecriture, l’ex´ecution
+est suspendue jusqu’`a la confirmation explicite de l’utilisateur dans l’interface graphique.
+3.3Inventaire Quantitatif du Code Source
+L’ensemble de la solution repr´esente un volume de code hautement modulaire, r ´esum´e dans le
+tableau??.
+3.4Sp ´ecification D´etaill´ee des Mod`eles de Donn´ees ORM
+L’architecture de donn´ees repose sur 16 mod `eles Python ´etroitement interconnect´es, pr´esent´es
+dans le tableau??.
+3.4.1 Analyse Approfondie des Mod `eles Cl´es
+a) 1. Mod `ele d’Emplacement Multi-Sites (equipment.location)
+Ce mod`ele structure les actifs de l’entreprise au sein d’une arborescence parent-enfant stricte
+:
+Site→B ˆatiment→ ´Etage→Salle/Atelier→Baie/Emplacement (3.2)
+Page 22
+
+==================== PAGE 31 ====================
+
+CHAPTER 3. ARCHITECTURE SYST `EME, IMPL ´EMENTATION ET
+VALIDATION DE NAVIGATION Youssef BENYOUNES
+Composant Description & R ˆole Fonctionnel Fichiers Lignes (LOC)
+Mod`eles Python16 mod `eles m ´etier ( ´equipements, multi-sites,
+ordres, pi`eces, services IA, chat, logs)
+16 4 120
+Couche Compatibilit´e & ProvidersAbstraction LLM Gemini/Cerebras
+(equipment llm providers.py) et compat-
+ibilit´e v17/v18 (odoo compat.py)
+2 780
+Assistants & ContrˆoleursWizards (Journalisation NL, Rapports
+d’exportation), Contrˆoleur QR Code
+4 490
+Vues & Menus XMLVues Kanban, Listes group ´ees, Formulaires,
+Calendriers, Vues Pivot/Graph, Menus
+14 2 650
+Donn´ees, S´equences & CronsS ´equences d’incr ´ementation, 18 t ˆaches plan-
+ifi´ees automatiques, donn´ees de base
+6 640
+S´ecurit´e & R`egles d’Acc`es45 r `egles ACL (ir.model.access.csv) et r `egles
+d’enregistrement au niveau ligne
+2 110
+Rapports QWebD ´eclarations de rapports et gabarits vectoriels
+d’impression PDF
+2 320
+Tests Unitaires & Mocks138 tests backend Odoo (tests/) et 46 tests
+mock LLM (test llm providers.py)
+8 2 480
+Banc Playwright E2E16 fichiers de sp ´ecifications de test de naviga-
+tion navigateur (Chromium)
+16 1 850
+Scripts DevOps & OrchestrationScripts d’ex ´ecution WSL/Docker, Dockerfiles
+et compose de test isol´e
+6 280
+Total G´en´eral Ensemble complet du syst `eme valid´e 76 13 720
+Table 1.Inventaire exhaustif des artefacts logiciels et m ´etriques de code
+Chaque emplacement maintient un champ calcul ´ecomplete namecombinant les pr ´efixes
+hi´erarchiques et un compteur dynamiqueequipment countfacilitant le filtrage dans l’interface
+utilisateur.
+b) 2. Mod `ele d’Ordre de Travail (equipment.maintenance.order)
+Ce mod`ele pilote l’ex´ecution op´erationnelle. Il calcule automatiquement le co ˆut total con-
+solid´e selon la formule :
+Coˆut Total=
+X
+i
+(Qi ×C i) + (Tint ×R MO)(3.3)
+o`uQ i repr´esente la quantit´e de la pi`ece de rechangei,C i son coˆut unitaire moyen pond´er´e,T int
+la dur´ee d’intervention en heures etR MO le taux horaire de main-d’œuvre.
+Page 23
+
+==================== PAGE 32 ====================
+
+CHAPTER 3. ARCHITECTURE SYST `EME, IMPL ´EMENTATION ET
+VALIDATION DE NAVIGATION Youssef BENYOUNES
+Mod`ele ORM Table PostgreSQL Responsabilit ´e M´etier Principale Champs
+equipment.equipment equipment equipmentRegistre central, garanties, QR
+code, Health Score
+34
+equipment.category equipment categoryFamilles et cat ´egories hi´erarchiques
+d’´equipements
+12
+equipment.location equipment locationHi ´erarchie spatiale multi-sites (Site
+→Baie)
+14
+equipment.maintenance.order equipment maint orderOrdre curatif/pr ´eventif, machine
+d’´etats, coˆuts
+30
+repair.request repair requestDemandes d’intervention
+op´erateurs et pannes urgentes
+18
+equipment.checklist equipment checklistProtocoles d’inspection et points de
+contrˆole
+10
+equipment.spare.part equipment spare partLignes de pi `eces consomm´ees et li-
+aison avecstock
+12
+equipment.template equipment templateMod `eles r ´ecurrents d’ordres de
+maintenance pr´eventive
+16
+equipment.dashboard equipment dashboardAgr ´egation des KPIs et m ´etriques
+en temps r´eel
+15
+equipment.ai.config equipment ai configConfiguration des cl ´es LLM,
+mod`eles et seuils d’activation
+14
+equipment.ai.service equipment ai serviceAlgorithmes statistiques (MTBF,
+pr´evision budg´etaire)
+12
+equipment.ai.data equipment ai dataExtraction des vecteurs de features
+depuis l’historique
+8
+equipment.ai.nl equipment ai nlParser en langage naturel (LLM +
+repli heuristique)
+11
+equipment.ai.chat equipment ai chatAssistant conversationnel interactif
+et routage d’outils
+15
+equipment.ai.prediction equipment ai predHistorique et piste d’audit invio-
+lable des requˆetes IA
+16
+odoo.compat– Couche d’encapsulation de compat-
+ibilit´e Odoo 17/18
+–
+Table 2.Sp ´ecification des 16 mod`eles de donn´ees de l’architecture ORM
+c) 3. Mod `ele de Trac ¸abilit´e et d’Audit IA (equipment.ai.prediction)
+Conform´ement aux exigences suisses de protection des donn ´ees (nLPD) et de conformit ´e
+financi`ere, toute sollicitation de la couche LLM (journalisation ou assistant) consigne un enreg-
+istrement d’audit horodat ´e contenant : le type d’op ´eration, le texte utilisateur brut, la r ´eponse
+structur´ee valid´ee, les jetons consomm ´es, le mod `ele utilis ´e et l’identifiant de confirmation de
+l’utilisateur.
+Page 24
+
+==================== PAGE 33 ====================
+
+CHAPTER 3. ARCHITECTURE SYST `EME, IMPL ´EMENTATION ET
+VALIDATION DE NAVIGATION Youssef BENYOUNES
+3.5Algorithmique Avanc ´ee & Qualification R´ealiste de l’IA
+3.5.1 Classification R ´ealiste des Composants d’Intelligence Artificielle
+Dans une d ´emarche d’int´egrit´e scientifique et technique, le tableau?? ´etablit la nature exacte
+de chaque composant d’intelligence artificielle int´egr´e au module.
+Fonctionnalit´e Classification ML Entra ˆın´e ? M ´ecanisme & Preuve Logicielle
+Health ScoreBas ´e sur des R`egles Non Pond ´eration d ´eterministe multicrit `ere
+sur 100 points
+Risque de PanneStatistique Non Score pond ´er´e `a 6 facteurs bas ´e sur
+MTBF/MTTR
+Planification IntelligenteBas ´e sur des R`egles Non D ´eclencheurs sur seuils d’ ´ech´eance et
+compteurs
+Pr´evision des CoˆutsStatistique Non Moyennes mobiles pond ´er´ees avec cor-
+rection saisonni`ere
+Conseil de RemplacementStatistique Non Analyse d’amortissement et retour sur
+investissement
+D´epr´eciation d’ActifStatistique Non Calcul d’amortissement lin ´eaire selon
+dur´ee de vie
+Journalisation NL LLM G ´en´eratif– Appels r ´eels Google Gemini avec repli
+par mots-cl´es
+Assistant Conversationnel LLM G ´en´eratif– Routage d’outils et validation struc-
+tur´ee Gemini
+D´etection d’AnomaliesNon Impl ´ement´e – Exclu du p ´erim`etre fonctionnel par
+sp´ecification
+Table 3.Classification rigoureuse des fonctionnalit ´es d’intelligence artificielle
+3.5.2 Algorithme de Score de Sant ´e (Health Score)
+Le score de sant ´eH∈[0,100]fournit une m ´etrique instantan´ee de la fiabilit ´e de chaque ma-
+chine :
+H= 0.20·S Age + 0.25·S Pannes + 0.20·S Downtime + 0.25·S Adherence + 0.10·S Garantie (3.4)
+Chaque sous-score est born ´e dans[0,100]avec protection native contre les divisions par z ´ero
+lors de l’initialisation de machines neuves n’ayant aucun historique de fonctionnement.
+Page 25
+
+==================== PAGE 34 ====================
+
+CHAPTER 3. ARCHITECTURE SYST `EME, IMPL ´EMENTATION ET
+VALIDATION DE NAVIGATION Youssef BENYOUNES
+3.5.3 Pr ´ediction Statistique de D´efaillance (MTBF & MTTR)
+La probabilit´e de panne sous 30 jours repose sur l’estimation du Temps Moyen Entre Pannes
+(Mean Time Between Failures - MTBF) et du Temps Moyen de R ´eparation (Mean Time To
+Repair - MTTR) :
+MTBF= Heures Totales de Fonctionnement
+max(1, Npannes) ,MTTR= Heures Totales d’Arrˆet
+max(1, Npannes) (3.5)
+Un score de risque composite `a 6 composantes pond ´er´ees signale les ´equipements prioritaires
+n´ecessitant une r´evision imm´ediate.
+3.6Validation de Navigation et Tests E2E sous Playwright
+3.6.1 Mise en Place du Banc de Test Navigateur E2E
+Pour combler l’´ecart critique entre les tests unitaires de backend (qui n’ex´ecutent pas de moteur
+de rendu JavaScript/OWL) et l’exp ´erience utilisateur r ´eelle, un banc complet de testsEnd-to-
+End(E2E) a ´et´e d´eploy´e `a l’aide dePlaywrightet du navigateurChromium.
+L’orchestration repose sur le script d’automatisationscripts/e2e-run.shex ´ecut´e sous
+environnement WSL/Docker, garantissant la persistance du conteneur Odoo 18, la surveillance
+active de sa disponibilit ´e (health polling) et la capture d’art ´efacts de test (traces de d ´ebogage,
+captures d’´ecran et vid´eos de session WebM).
+3.6.2 Couverture Compl `ete de la Navigation Inter-Vues
+La campagne E2E comprend16 suites de sp ´ecificationsex ´ecutant32 tests complets(taux de
+r´eussite de 100%, z ´ero ´echec, z ´ero test ignor ´e). Elle valide minutieusement l’ensemble des
+parcours de navigation au sein de l’interface Odoo 18 :
+Page 26
+
+==================== PAGE 35 ====================
+
+CHAPTER 3. ARCHITECTURE SYST `EME, IMPL ´EMENTATION ET
+VALIDATION DE NAVIGATION Youssef BENYOUNES
+1. Navigation en Cartes Kanban et Vues Listes Group ´ees: Odoo 18 introduit un com-
+portement par d ´efaut o `u les listes group ´ees s’affichent `a l’ ´etat repli ´e (collapsed). Les
+tests E2E ont valid´e le m´ecanisme d’expansion automatique des groupes et la s ´election
+dynamique des cartes d’´equipements dot´ees de badges de couleur de sant´e.
+2. Navigation dans l’Arborescence Multi-Sites: Parcours hi ´erarchique depuis le site
+parent jusqu’aux baies individuelles, validant le filtrage instantan ´e des ´equipements
+h´eberg´es.
+3. Navigation Formulaire et Fil d’Ariane (Breadcrumbs): V ´erification de la coh ´erence
+de navigation lors du passage d’une vue liste vers une vue fiche, validation de
+l’avancement sur la barre d’´etat (Draft→Confirmed→In Progress→Done) et retour
+via le fil d’Ariane.
+4. Navigation Calendrier et Planning Adapt ´e: Remplacement de la vue propri ´etaire
+gantt(qui d ´eclenchait une erreur 500 sur Odoo 18 Community) par une vue de planifi-
+cation calendrier mensuelle et hebdomadaire enti`erement valid´ee sous Playwright.
+5. G ´en´eration et Navigation QR Code Mobile: Contr ˆole du rendu vectoriel du QR code,
+validation de l’int ´egrit´e de l’ent ˆete binaire PNG g ´en´er´e et affichage sans latence de la
+fiche mobile associ´ee.
+6. Navigation Interactive du Tableau de Bord: Validation du clic sur les widgets KPI
+(ordres en retard, machines critiques) d´eclenchant le drilldown vers les listes pr´e-filtr´ees
+correspondantes.
+7. Navigation des Dialogues Modaux de Journalisation NL: R ´esolution du comporte-
+ment o`u le wizard se fermait imm´ediatement apr`es analyse ; validation du rechargement
+modal permettant d’afficher les r´esultats extraits avant la cr´eation de l’ordre.
+8. Navigation de l’Assistant Conversationnel: Maintien de l’ ´etat de conversation multi-
+tours dans le dialogue modal lors des ´echanges et confirmations.
+9. Validation du Flux de Confirmation d’ ´Ecriture: Preuve formelle par les tests E2E
+qu’aucune ´ecriture en base n’est ex ´ecut´ee lors d’une requ ˆete de modification tant que
+l’utilisateur n’a pas cliqu´e sur le bouton de confirmation dans l’interface.
+10. Sc ´enario Complet de D ´emonstration (Full Demo Scenario): Ex ´ecution continue et
+sans faille de la chaˆıne compl`ete de maintenance en 20 ´etapes successives en1,1 minute
+(tests/e2e/full-demo.spec.ts).
+Page 27
+
+==================== PAGE 36 ====================
+
+CHAPTER 3. ARCHITECTURE SYST `EME, IMPL ´EMENTATION ET
+VALIDATION DE NAVIGATION Youssef BENYOUNES
+3.6.3 Anomalies R ´eelles D´etect´ees et Corrig´ees par la Validation de Navi-
+gation
+La valeur ajout ´ee majeure de la campagne de tests Playwright r ´eside dans la d ´etection et la
+correction de10 anomalies r ´eelles d’interface et de navigationqui ´echappaient totalement `a
+la suite de tests backend, synth´etis´ees dans le tableau??.
+N◦ Composant / Vue Comportement D ´efaillant
+D´etect´e
+Solution Technique Appliqu´ee
+1 Liste group ´ee
+´equipements
+Groupes repli ´es masquant
+les lignes en vue liste Odoo
+18
+Ajout d’une s ´equence explicite de
+d´epliage de groupe dans le framework
+d’UI
+2 Action Ordres de Tra-
+vail
+Erreur 500 ( ≪ Oops ≫) au
+chargement de l’action
+Retrait deganttduview mode(vue
+exclusive `a Odoo Enterprise)
+3 Lignes pi `eces
+d´etach´ees
+L’administrateur voyait 0
+ligne saisie par les techni-
+ciens
+Correction de la r`egle d’enregistrement
+avecperm read="0"
+4 Dialogue Assistant NL Le modal de saisie se fer-
+mait avant d’afficher les
+r´esultats
+Retour d’une action de rechargement
+(reload action) dansaction parse
+5 Chat Assistant conver-
+sationnel
+Le dialogue se fermait lors
+de l’envoi ou confirmation
+Application d’actions de rechargement
+suraction sendetconfirm
+6 D ´etection
+d’´equipements
+Questions directes renvoy-
+aient l’aide par d´efaut
+Impl´ementation d’une recherche par
+sous-chaˆıne sur noms, codes et s´eries
+7 G ´en´erateur de QR
+Code
+Rejet injustifi ´e des codes
+QR de taille inf´erieure `a un
+seuil
+Validation de la signature binaire PNG
+au lieu d’un seuil de taille arbitraire
+8 Donn ´ees de
+d´emonstration
+´Echec de chargement des
+produits consommables
+Migration vers’consu’avec
+is storable=Trueconforme v18
+9 S ´electeurs de test E2E ´Evaluation silencieuse er-
+ron´ee des tuples JS
+Correction des domaines Play-
+wright sous forme de tableaux r ´eels
+[["f","=",x]]
+10 G ´en´eration par gabarit Conflit d’assertion sur la
+g´en´eration globale d’ordres
+Restriction du p´erim`etre de v´erification
+aux ordres issus du gabarit test´e
+Table 4.Synth `ese des 10 anomalies d’ergonomie et de navigation r´esolues par Playwright
+Page 28
+
+==================== PAGE 37 ====================
+
+CHAPTER 3. ARCHITECTURE SYST `EME, IMPL ´EMENTATION ET
+VALIDATION DE NAVIGATION Youssef BENYOUNES
+3.7T ´el´em´etrie d’Assurance Qualit´e et Preuves sur Disque
+La validation de la solution repose sur une batterie compl`ete de tests automatis´es couvrant tous
+les niveaux de la pile logicielle. L’ensemble des r ´esultats est attest ´e par des fichiers de logs et
+des enregistrements vid´eo sur disque, synth´etis´es dans le tableau??.
+Batterie de Tests Volume R ´esultat Preuve Mat ´erielle sur
+Disque
+Tests Backend Odoo 18138 tests138/138 PASS (100%)equipment maintenance/.bt final.log
+(RC=0)
+Tests Mock Providers LLM46 tests46/46 PASS (100%)tests/test llm providers.py
+(unittest)
+Tests Live API Gemini6 tests6/6 PASS (100%)tests/live api results.json
+(gemini-2.5-flash)
+Tests Live API Cerebras2 testsAuth PASS / Quota 402Requ ˆete HTTP r ´eelle
+valid´ee ; g ´en´eration
+bloqu´ee quota
+Tests E2E Navigation Playwright32 tests32/32 PASS (100%)artifacts/playwright-report/index.html
+Sc´enario D´emo Syst`eme Complet20 ´etapesPASS (1,1 minute)artifacts/videos/full-system-demo.webm
+(2,9 Mo)
+Sc´enario D´emo IA / BYO-LLM5 ´etapesPASSartifacts/videos/ai-llm-demo.webm
+(1,3 Mo)
+Table 5.Matrice consolid ´ee de t´el´em´etrie d’assurance qualit´e logicielle
+3.8Conclusion
+Ce chapitre a expos ´e l’architecture compl `ete, l’impl ´ementation des 16 mod `eles ORM et la
+concr´etisation de la passerelle d’intelligence artificielle BYO-LLM. L’apport fondamental de
+la campagne de tests Playwright a permis de valider la navigation fluide`a travers toutes les vues
+d’Odoo 18 et d’ ´eliminer 10 anomalies critiques d’exp ´erience utilisateur. Avec 138 tests back-
+end, 46 tests mock LLM et 32 tests E2E au vert, le moduleequipment maintenanced ´emontre
+une robustesse de classe industrielle, prˆet pour un d´eploiement en production chez les clients de
+IT-Koncept SA.
+Page 29
+
+==================== PAGE 38 ====================
+
+CHAPTER 4. BILAN DU PROJET ET RETOUR D’EXP ´ERIENCE Youssef BENYOUNES
+Chapter
+4
+Bilan du Projet et Retour
+d’Exp´erience
+4.1Introduction
+Ce quatri`eme chapitre dresse le bilan d’ing´enierie, m´ethodologique et professionnel de ce stage
+de fin d’ ´etudes men ´e au sein de la soci ´et´e suisseIT-Koncept SAet de sa filialeIT-Koncept
+Tunisia S`arl(Groupe Business-Koncept). Il permet de mesurer l’impact des r ´ealisations tech-
+niques, d’analyser les comp´etences d´evelopp´ees, de documenter les d´efis majeurs surmont´es et
+d’´evaluer la valeur ajout ´ee apport´ee au syst `eme d’information de l’entreprise et de ses clients
+industriels.
+4.2Apports et Comp ´etences D´evelopp´ees
+4.2.1 Apports Techniques et d’Ing ´enierie Logicielle
+La conception, l’impl´ementation et la validation du moduleequipment maintenanceont per-
+mis de consolider des comp´etences avanc´ees dans plusieurs domaines de pointe :
+•Ma ˆıtrise Approfondie de l’ORM Odoo 18 & M ´etaprogrammation Python:
+Compr´ehension intime du cycle de vie des transactions de l’ORM, manipulation
+Page 30
+
+==================== PAGE 39 ====================
+
+CHAPTER 4. BILAN DU PROJET ET RETOUR D’EXP ´ERIENCE Youssef BENYOUNES
+avanc´ee des contextes, h ´eritage de mod `eles (Classical & Delegation Inheritance) et
+´ecriture de requˆetes group´ees performantes via l’API read groupoptimis ´ee.
+•Ing ´enierie de l’IA G ´en´erative et Couche BYO-LLM: Conception d’une
+couche d’abstraction multi-fournisseurs (LLMProvider) int ´egrant Google Gemini
+(gemini-2.5-flash) et Cerebras. Ma ˆıtrise des techniques deprompt engineer-
+ing, d’extraction de donn ´ees `a sch ´ema JSON strict, d’isolation stricte des outils et
+d’impl´ementation de flux de confirmation explicite avant ´ecriture.
+•Validation E2E de Navigation et Automatisation Navigateur (Playwright): Mise
+en œuvre d’un banc de test automatis´e sous Playwright (Chromium) validant les inter-
+actions utilisateurs r ´eelles : d ´epliage des listes group ´ees Odoo 18, navigation par fil
+d’Ariane, maintien de session dans les assistants modaux et drilldown sur tableaux de
+bord.
+•Approche Qualit ´e Multi-Niveaux & DevOps: ´Elaboration d’une strat ´egie de
+v´erification combinant 138 tests backend Odoo, 46 tests mock LLM, tests en direct
+des APIs et 32 tests de navigation E2E, le tout orchestr ´e sous conteneurs Docker et
+environnement WSL.
+4.2.2 Apports M ´ethodologiques et Organisationnels
+Sur le plan de la gestion de projet et de la rigueur d’ing´enierie logicielle :
+•Conduite de Projet Agile/Scrum: D ´ecoupage it´eratif en quatre sprints de deux se-
+maines avec livrables test ´es et alignement r ´egulier avec l’encadrant industriel chez
+IT-Koncept.
+•Gestion Proactive de la Dette Technique: Identification pr ´ecoce des 15 ruptures de
+compatibilit´e et anomalies d’interface Odoo 18, pr ´evenant les r ´egressions en produc-
+tion.
+Page 31
+
+==================== PAGE 40 ====================
+
+CHAPTER 4. BILAN DU PROJET ET RETOUR D’EXP ´ERIENCE Youssef BENYOUNES
+•Trac ¸abilit´e et Preuves Mat ´erielles: Culture de la preuve syst ´ematique par
+l’automatisation de captures d’ ´ecrans, de rapports d’ex ´ecution HTML et de vid ´eos
+de d´emonstration de bout en bout.
+4.2.3 Apports Humains et Professionnels
+L’immersion au sein de IT-Koncept SA a enrichi ma posture d’ing´enieur logiciel :
+•Compr ´ehension des Exigences des PME Suisses: Int ´egration des contraintes r´eelles
+de pr´ecision, de haute disponibilit ´e et de conformit ´e l´egale (nLPD) des clients de Su-
+isse romande.
+•Autonomie et Capacit ´e de R´esolution de Probl`emes Complexes: Capacit ´e `a diag-
+nostiquer des d´efaillances subtiles (filtrage de lecture par les r`egles de s´ecurit´e, ferme-
+ture inopin´ee de fenˆetres modales, comportements de rendu de listes group´ees).
+4.3D ´efis Majeurs Rencontr´es et Solutions Apport´ees
+La r´ealisation de ce projet d’envergure a confront´e l’´equipe `a plusieurs d´efis techniques stimu-
+lants, r´esum´es dans le tableau 6.
+4.4Conclusion
+Ce bilan t ´emoigne de l’aboutissement complet des objectifs fix ´es. L’alliance entre rigueur
+m´ethodologique, excellence technique sur l’ORM Odoo 18 et automatisation pouss ´ee de la
+validation de navigation sous Playwright a permis de d ´elivrer un produit robuste, s ´ecuris´e et
+directement exploitable au sein du catalogue de solutions deIT-Koncept SA.
+Page 32
+
+==================== PAGE 41 ====================
+
+CHAPTER 4. BILAN DU PROJET ET RETOUR D’EXP ´ERIENCE Youssef BENYOUNES
+D´efi Technique Ren-
+contr´e
+Cause Sous-Jacente Solution Technique Impl ´ement´ee
+Rupture d’API
+read groupOdoo
+18
+L’ORM v18 retourne des tu-
+ples avec agr ´egat:countau
+lieu de dictionnaires
+D´eveloppement du helper ver-
+sionn´eread group counts()dans
+odoo compat.py
+Erreur 500 sur l’action
+des ordres
+Pr´esence du modegantt
+non support ´e en Community
+(web ganttabsent)
+Suppression du modeganttet adapta-
+tion vers les vues liste, calendrier et plan-
+ning
+Masquage des pi `eces
+d´etach´ees pour l’admin
+R`eglewrite-ownomettant
+perm read(Odoo applique
+Truepar d ´efaut)
+D´efinition explicite deperm read="0"
+sur les r`egles de pi`eces d´etach´ees
+Fermeture pr ´ematur´ee
+des wizards modaux
+Les m ´ethodes retournaient
+True, interpr ´et´e par Odoo
+comme ≪ fermer la fenˆetre ≫
+Retour d’une action de rechargement
+(reload action) maintenant la vue ou-
+verte
+D´etection
+d’´equipements en
+langage naturel
+La recherche initiale exigeait
+une correspondance exacte
+de phrase compl`ete
+Impl´ementation d’une recherche par
+sous-chaˆıne sur les noms, codes et s´eries
+Arrˆet inopin ´e du
+conteneur en environ-
+nement WSL
+Mise en veille d’inactivit´e de
+l’instance WSL et conflits de
+processus hˆotes
+Conception du scripte2e-run.shavec
+volume nomm´e et surveillance active
+Table 6.Synth `ese des d´efis techniques majeurs et des solutions d’ing´enierie appliqu´ees
+Page 33
+
+==================== PAGE 42 ====================
+
+CONCLUSION G ´EN ´ERALE ET PERSPECTIVES Youssef BENYOUNES
+Conclusion G´en´erale et Perspectives
+Ce projet de fin d’ ´etudes et de stage d’ing ´enieur a permis d’aborder une probl ´ematique indus-
+trielle et logicielle de tout premier plan : la digitalisation, l’automatisation et l’ordonnancement
+intelligent de la maintenance des ´equipements au sein d’un Progiciel de Gestion Int ´egr´e (ERP)
+d’entreprise, renforc ´e par les apports r ´ecents de l’intelligence artificielle g ´en´erative et de
+l’automatisation des tests de navigation.
+Au terme de ce travail men ´e au sein de la soci ´et´e suisseIT-Koncept SAet de sa filiale
+d’ing´enierieIT-Koncept Tunisia S `arl(Groupe Business-Koncept), l’ensemble des objectifs
+fix´es au cahier des charges ont ´et´e pleinement atteints. Le moduleequipment maintenancea
+´et´e conc ¸u, d´evelopp´e, refactoris´e et valid´e selon les plus hauts standards d’ing´enierie logicielle
+pour la plateforme de nouvelle g´en´erationOdoo 18.0 Community.
+Synth`ese des Contributions et R´esultats Cl´es
+Les r´ealisations majeures issues de ce projet s’articulent autour des axes suivants :
+•Une Solution ERP Industrielle Exhaustive et Modulaire: D ´eveloppement
+d’un syst `eme complet totalisant plus de13 700 lignes de coder ´eparties sur76
+fichiers, int ´egrant16 mod `eles de donn ´ees ORM, une hi ´erarchie spatiale multi-sites
+(equipment.location), la g´en´eration de codes QR pour identification mobile et des
+rapports vectoriels QWeb PDF.
+Page 34
+
+==================== PAGE 43 ====================
+
+CONCLUSION G ´EN ´ERALE ET PERSPECTIVES Youssef BENYOUNES
+•Aide `a la D ´ecision & Analytique Pr ´edictive R´ealiste: ´Elaboration d’une formule
+multicrit`ere de score de sant ´e (Health Scoresur 100), coupl ´ee `a des mod `eles statis-
+tiques de pr´evision des risques de panne (MTBF/MTTR), de projection budg´etaire par
+moyennes mobiles pond´er´ees et d’aide au remplacement technico-´economique de ma-
+chines.
+•Couche IA Conversationnelle BYO-LLM S ´ecuris´ee: Int ´egration d’une passerelle
+multi-fournisseurs (Google Gemini et Cerebras) permettant la journalisation
+d’interventions en langage naturel et l’assistance interactive, s ´ecuris´ee par une iso-
+lation stricte des outils et un flux obligatoire de confirmation explicite avant ´ecriture.
+•Validation Compl `ete de Navigation sous Playwright: D ´eploiement d’une suite de
+32 tests E2Esous navigateur Chromium r ´eel (16 fichiers de sp ´ecifications, 100% de
+succ`es), ayant permis d’identifier et de corriger10 anomalies r ´eelles de navigation
+et d’interface(d ´epliage des listes group ´ees Odoo 18, suppression de l’erreur 500 sur
+le Gantt, correction de visibilit ´e des pi `eces de rechange, rechargement des fen ˆetres
+modales).
+•T ´el´em´etrie d’Assurance Qualit ´e et Preuves sur Disque: Validation sans faille at-
+test´ee par138 tests backend(100% de succ `es sur base fraˆıchebt final3),46 tests
+mock LLM, la validation live de l’API Gemini et l’enregistrement de deux vid ´eos
+compl`etes de d´emonstration.
+Perspectives d’ ´Evolution et Feuille de Route
+Afin de prolonger cette dynamique d’innovation technologique, plusieurs perspectives
+d’´evolution sont envisag´ees :
+1. Interconnexion IoT et Maintenance Conditionnelle (CBM): Interfacer le module
+avec des automates et capteurs industriels (via les protocoles MQTT et Modbus) pour
+ing´erer en continu les donn´ees physiques (vibrations, temp´erature, amp´erage, compteurs
+horaires) et d´eclencher automatiquement des ordres pr´eventifs en cas de d´erive anormale.
+Page 35
+
+==================== PAGE 44 ====================
+
+CONCLUSION G ´EN ´ERALE ET PERSPECTIVES Youssef BENYOUNES
+2. Entra ˆınement de Mod `eles Supervis ´es de Machine Learning: Exploiter les his-
+toriques d’interventions et les caract ´eristiques d’ ´equipements extraites par le mod `ele
+equipment.ai.datapour entra ˆıner des mod`eles de classification supervis ´ee (Random
+Forest,Gradient Boosting) pr ´edisant les modes de d´efaillance sp´ecifiques.
+3. Application Mobile D ´econnect´ee pour Techniciens Nomades: Concevoir une appli-
+cation mobile avec moteur de synchronisation bidirectionnelle hors-ligne pour les in-
+terventions sur des sites industriels ou des salles blanches d ´epourvues de connectivit ´e
+r´eseau.
+En conclusion, ce stage a constitu ´e une exp ´erience professionnelle et scientifique par-
+ticuli`erement enrichissante au sein de l’ ´ecosyst`eme Odoo suisse et tunisien. Il m’a offert
+l’opportunit´e de mobiliser les comp ´etences acquises durant mon cursus d’ing ´enieur en g ´enie
+logiciel et de d ´elivrer un produit op ´erationnel, robuste, ´el´egant et `a tr `es haute valeur ajout ´ee
+pourIT-Koncept SA.
+Page 36
+
+==================== PAGE 45 ====================
+
+ANNEXES TECHNIQUES Youssef BENYOUNES
+Annexes Techniques
+Annexe 1 : Manifeste du Module ( manifest .py)
+Le fichier de d ´eclaration du module sp ´ecifie les m ´etadonn´ees pourIT-Koncept SA, les
+d´ependances vers les modules natifs d’Odoo 18, ainsi que l’ordonnancement pr ´ecis de charge-
+ment des vues, mod`eles multi-sites, assistants modaux et r`egles de s´ecurit´e.
+1{
+2’ name ’: ’ Eq ui pm en t M a i n t e n a n c e System ’ ,
+3’ version ’: ’ 1 8 . 0 . 1 . 0 . 0 ’ ,
+4’ category ’: ’ M a n u f a c t u r i n g / M a i n t e n a n c e ’ ,
+5’ summary ’: ’ I n d u s t r i a l Maintenance , Multi - Site Locations , An al yt ic s
+& BYO - LLM A ss is ta nt ’ ,
+6’ sequence ’: 10 ,
+7’ license ’: ’ LGPL -3 ’ ,
+8’ author ’: ’IT - Koncept SA & E n g i n e e r i n g Team ’ ,
+9’ website ’: ’ https :// www . it - koncept . ch ’ ,
+10’ depends ’: [
+11’ base ’ ,
+12’ mail ’ ,
+13’ stock ’ ,
+14’ product ’ ,
+15’ web ’ ,
+16] ,
+Page 37
+
+==================== PAGE 46 ====================
+
+ANNEXES TECHNIQUES Youssef BENYOUNES
+17’ data ’: [
+18# Securite et regles d ’ acces
+19’ security / e q u i p m e n t _ s e c u r i t y . xml ’ ,
+20’ security / ir . model . access . csv ’ ,
+21# Se qu en ce s et Crons
+22’ data / e q u i p m e n t _ s e q u e n c e . xml ’ ,
+23’ data / e q u i p m e n t _ c r o n . xml ’ ,
+24’ data / m a i l _ t e m p l a t e _ d a t a . xml ’ ,
+25’ data / c h e c k l i s t _ t e m p l a t e _ d a t a . xml ’ ,
+26# Rapports QWeb PDF
+27’ report / e q u i p m e n t _ r e p o r t _ t e m p l a t e s . xml ’ ,
+28’ report / e q u i p m e n t _ r e p o r t s . xml ’ ,
+29# Vues Metier & N a v i g a t i o n
+30’ views / e q u i p m e n t _ l o c a t i o n _ v i e w s . xml ’ ,
+31’ views / e q u i p m e n t _ c a t e g o r y _ v i e w s . xml ’ ,
+32’ views / e q u i p m e n t _ v i e w s . xml ’ ,
+33’ views / m a i n t e n a n c e _ o r d e r _ v i e w s . xml ’ ,
+34’ views / r e p a i r _ r e q u e s t _ v i e w s . xml ’ ,
+35’ views / e q u i p m e n t _ t e m p l a t e _ v i e w s . xml ’ ,
+36’ views / e q u i p m e n t _ d a s h b o a r d _ v i e w s . xml ’ ,
+37’ views / e q u i p m e n t _ a i _ c o n f i g _ v i e w s . xml ’ ,
+38’ views / e q u i p m e n t _ m e n u . xml ’ ,
+39# Wizards modaux
+40’ wizard / e q u i p m e n t _ a i _ n l _ w i z a r d _ v i e w s . xml ’ ,
+41’ wizard / e q u i p m e n t _ r e p o r t _ w i z a r d _ v i e w s . xml ’ ,
+42] ,
+43’ demo ’: [
+44’ demo / e q u i p m e n t _ d e m o . xml ’ ,
+45] ,
+46’ i n s t a l l a b l e ’: True ,
+47’ a p p l i c a t i o n ’: True ,
+48’ a u t o _ i n s t a l l ’: False ,
+49}
+Listing 4.1.Extrait du fichier de d ´eclaration manifest .py
+Page 38
+
+==================== PAGE 47 ====================
+
+ANNEXES TECHNIQUES Youssef BENYOUNES
+Annexe 2 : Matrice de S´ecurit´e & R`egle de Lecture Corrig´ee
+L’extrait ci-dessous illustre la d´efinition des permissions CRUD dansir.model.access.csv
+ainsi que la correction de la r `egle d’enregistrementwrite-owno `uperm read="0"a ´et´e
+explicitement d ´efini pour emp ˆecher le masquage des lignes de pi `eces d ´etach´ees pour
+l’administrateur.
+1# ir . model . access . csv ( extrait sur 45 regles )
+2id , name , model_id : id , group_id : id , perm_read , perm_write , perm_create ,
+p e r m _ u n l i n k
+3a c c e s s _ e q u i p m e n t _ v i e w e r , access . eq ui pm en t . viewer ,
+m o d e l _ e q u i p m e n t _ e q u i p m e n t , g r o u p _ e q u i p m e n t _ v i e w e r ,1 ,0 ,0 ,0
+4a c c e s s _ e q u i p m e n t _ t e c h , access . eq ui pm en t . tech , m o d e l _ e q u i p m e n t _ e q u i p m e n t ,
+g r o u p _ e q u i p m e n t _ t e c h ,1 ,1 ,1 ,0
+5a c c e s s _ e q u i p m e n t _ m g r , access . eq ui pm en t . mgr , m o d e l _ e q u i p m e n t _ e q u i p m e n t ,
+g r o u p _ e q u i p m e n t _ m a n a g e r ,1 ,1 ,1 ,1
+6a c c e s s _ l o c a t i o n _ u s e r , access . location . user , m o d e l _ e q u i p m e n t _ l o c a t i o n ,
+g r o u p _ e q u i p m e n t _ v i e w e r ,1 ,0 ,0 ,0
+7a c c e s s _ l o c a t i o n _ m g r , access . location . mgr , m o d e l _ e q u i p m e n t _ l o c a t i o n ,
+g r o u p _ e q u i p m e n t _ m a n a g e r ,1 ,1 ,1 ,1
+8a c c e s s _ a i _ c o n f i g _ m g r , access . ai . config . mgr , m o d e l _ e q u i p m e n t _ a i _ c o n f i g ,
+g r o u p _ e q u i p m e n t _ m a n a g e r ,1 ,1 ,1 ,1
+9a cc es s_ ai _p re d_ m gr , access . ai . pred . mgr , m o d e l _ e q u i p m e n t _ a i _ p r e d i c t i o n ,
+g r o u p _ e q u i p m e n t _ m a n a g e r ,1 ,1 ,1 ,0
+10
+11<! - - C o r r e c t i o n de la regle write - own dans e q u i p m e n t _ s e c u r i t y . xml -->
+12< record id =" r u l e _ s p a r e _ p a r t _ l i n e _ t e c h n i c i a n _ w r i t e " model =" ir . rule " >
+13< field name =" name " > Spare Parts : t e c h n i c i a n can only modify own lines
+</ field >
+14< field name =" model_id " ref =" m o d e l _ e q u i p m e n t _ s p a r e _ p a r t "/ >
+15< field name =" groups " eval ="[(4 , ref ( ’ g r o u p _ e q u i p m e n t _ t e c h ’) ) ]"/ >
+16< field name =" pe rm _r ea d " eval ="0"/ > <! - - C o r r e c t i o n clef : lecture
+non filtree -->
+17< field name =" p e r m _ w r i t e " eval ="1"/ >
+18< field name =" p e r m _ c r e a t e " eval ="1"/ >
+Page 39
+
+==================== PAGE 48 ====================
+
+ANNEXES TECHNIQUES Youssef BENYOUNES
+19< field name =" p e r m _ u n l i n k " eval ="1"/ >
+20< field name =" d o m a i n _ f o r c e " >[( ’ create_uid ’ , ’= ’ , user . id ) ] </ field >
+21</ record >
+Listing 4.2.Extrait des permissions CSV et de la r `egle XML corrig´ee
+Annexe 3 : Extrait de la Suite de Tests Backend Odoo (138 Tests)
+L’extrait suivant pr´esente la validation unitaire du calcul du score de sant ´e, de la pr ´evention
+contre les divisions par z´ero sur le MTBF, et du cycle de vie des ordres.
+1from odoo . tests . common import T r a n s a c t i o n C a s e
+2from odoo . e x c e p t i o n s import V a l i d a t i o n E r r o r
+3
+4class T e s t E q u i p m e n t M a i n t e n a n c e ( T r a n s a c t i o n C a s e ) :
+5
+6@ c l a s s m e t h o d
+7def s e t U p C l a s s ( cls ) :
+8super () . s e t U p C l a s s ()
+9cls . category = cls . env [ ’ eq ui pm en t . category ’ ]. create ({
+10’ name ’: ’ Usinage Nu me ri qu e ’ ,
+11’ code ’: ’ CNC -5 AX ’ ,
+12})
+13cls . location = cls . env [ ’ eq ui pm en t . location ’ ]. create ({
+14’ name ’: ’ Atelier P r o d u c t i o n A ’ ,
+15’ l o c a t i o n _ t y p e ’: ’ room ’ ,
+16})
+17cls . eq ui pm en t = cls . env [ ’ eq ui pm en t . eq ui pm en t ’ ]. create ({
+18’ name ’: ’ Centre d Usinage 5 - Axes ’ ,
+19’ se ri al _n o ’: ’CH - NYON -2026 -01 ’ ,
+20’ c a t e g o r y _ i d ’: cls . category . id ,
+21’ l o c a t i o n _ i d ’: cls . location . id ,
+22’ p u r c h a s e _ d a t e ’: ’ 2025 -01 -01 ’ ,
+23’ w a r r a n t y _ e n d _ d a t e ’: ’ 2027 -01 -01 ’ ,
+24})
+Page 40
+
+==================== PAGE 49 ====================
+
+ANNEXES TECHNIQUES Youssef BENYOUNES
+25
+26def t e s t _ h e a l t h _ s c o r e _ n e w _ m a c h i n e ( self ) :
+27" " " Verifie le score initial optimal d ’ un e q u i p e m e n t neuf " " "
+28self . eq ui pm en t . _ c o m p u t e _ h e a l t h _ s c o r e ()
+29self . a s s e r t G r e a t e r E q u a l ( self . eq ui pm en t . health_score , 90.0)
+30
+31def t e s t _ m t b f _ z e r o _ d i v i s i o n _ g u a r d ( self ) :
+32" " " Verifie que l ’ absence de panne ne de cl en ch e aucune division
+par zero " " "
+33r i s k _ s c o r e = self . env [ ’ eq ui pm en t . ai . service ’ ].
+c a l c u l a t e _ f a i l u r e _ r i s k ( self . e qu ip me nt . id )
+34self . a s s e r t G r e a t e r E q u a l ( risk_score , 0.0)
+35self . a s s e r t L e s s E q u a l ( risk_score , 100.0)
+Listing 4.3.Extrait des tests unitaires backend (tests/test equipment.py)
+Page 41
+
+==================== PAGE 50 ====================
+
+ANNEXES TECHNIQUES Youssef BENYOUNES
+Annexe 4 : Extrait des Tests E2E de Navigation Playwright
+L’extrait ci-dessous, issu de la suite Playwright (tests/e2e/full-demo.spec.ts), d´emontre
+l’automatisation de la navigation : d ´epliage des listes group ´ees Odoo 18, contr ˆole du fil
+d’Ariane, saisie dans le wizard modal et validation de la confirmation d’´ecriture.
+1import { test , expect } from ’ @ p l a y w r i g h t / test ’;
+2
+3test . describe ( ’ N a v i g a t i o n & View Testing Suite ’ , () = > {
+4
+5test ( ’ Navigate through Eq ui pm en t list , grouped ex pa ns io n and detail
+form ’ , async ({ page }) = > {
+6// C on ne xi on et n a v i g a t i o n vers le menu E q u i p e m e n t s
+7await page . goto ( ’/ web # action = e q u i p m e n t _ m a i n t e n a n c e .
+a c t i o n _ e q u i p m e n t _ e q u i p m e n t ’) ;
+8await page . w a i t F o r S e l e c t o r ( ’. o _ l i s t _ t a b l e ’) ;
+9
+10// Gestion du c o m p o r t e m e n t s p e c i f i q u e Odoo 18: deplier les groupes
+11const g r o u p H e a d e r s = page . locator ( ’ tr . o _ g r o u p _ h e a d e r ’) ;
+12if ( await g r o u p H e a d e r s . count () > 0) {
+13await g r o u p H e a d e r s . first () . click () ;
+14await page . w a i t F o r T i m e o u t (300) ;
+15}
+16
+17// Clic sur la premiere fiche et v e r i f i c a t i o n du fil d ’ Ariane
+18await page . locator ( ’. o _ d a t a _ r o w ’) . first () . click () ;
+19await expect ( page . locator ( ’. breadcrumb - item . active ’) ) . t o B e V i s i b l e () ;
+20
+21// Verifier le badge d ’ indice de sante
+22const h e a l t h B a d g e = page . locator ( ’ field [ name =" h e a l t h _ s c o r e "] ’) ;
+23await expect ( h e a l t h B a d g e ) . t o B e V i s i b l e () ;
+24}) ;
+25
+26test ( ’ Validate NL Wizard modal n a v i g a t i o n without pr em at ur e close ’ ,
+async ({ page }) = > {
+Page 42
+
+==================== PAGE 51 ====================
+
+ANNEXES TECHNIQUES Youssef BENYOUNES
+27// Ou ve rt ur e de l ’ as si st an t de j o u r n a l i s a t i o n en langage naturel
+28await page . locator ( ’ button : has - text ( " J o u r n a l i s e r une i n t e r v e n t i o n (
+IA ) " ) ’) . click () ;
+29await expect ( page . locator ( ’. modal - dialog ’) ) . t o B e V i s i b l e () ;
+30
+31// Saisie du rapport d ’ i n t e r v e n t i o n
+32await page . fill ( ’ textarea [ name =" raw_text "] ’ , ’ R e m p l a c e m e n t filtre a
+huile sur CNC -5 AX suite v ib ra ti on ’) ;
+33await page . click ( ’ button : has - text (" Analyser le texte ") ’) ;
+34
+35// As se rt io n critique : le dialogue doit rester ouvert ( reload action
+) avec apercu
+36await expect ( page . locator ( ’. modal - dialog ’) ) . t o B e V i s i b l e () ;
+37await expect ( page . locator ( ’ field [ name =" e x t r a c t e d _ s u m m a r y "] ’) ) . not .
+to Be Em pt y () ;
+38}) ;
+39
+40}) ;
+Listing 4.4.Extrait du sc ´enario de navigation Playwright E2E (full-demo.spec.ts)
+Annexe 5 : Script d’Orchestration E2E sous Docker/WSL
+(scripts/e2e-run.sh)
+Ce script PowerShell/Bash assure la gestion du cycle de vie du conteneur Docker Odoo 18, la
+persistance des volumes et le d´eclenchement de la suite Playwright.
+1#!/ usr / bin / env bash
+2set - euo pipefail
+3
+4C O M P O S E _ F I L E =" docker - compose . yml "
+5T A R G E T _ S P E C S ="${1: - tests / e2e /*. spec . ts }"
+6
+Page 43
+
+==================== PAGE 52 ====================
+
+ANNEXES TECHNIQUES Youssef BENYOUNES
+7echo "== > V e r i f i c a t i o n de la d i s p o n i b i l i t e de la stack Docker Odoo
+18..."
+8docker - compose -f "$C O M P O S E _ F I L E " up -d
+9
+10echo "== > Attente active ( polling HTTP ) du serveur Odoo sur le port
+8069..."
+11until curl -s -f -o / dev / null " http :// lo ca lh os t :8069/ web / login "; do
+12sleep 1
+13done
+14
+15echo "== > La nc em en t de la campagne de tests de n a v i g a t i o n P l a y w r i g h t E2E
+..."
+16npx p l a y w r i g h t test$T A R G E T _ S P E C S -- reporter = list , html
+17
+18echo "== > Rapport HTML et videos generes dans ar ti fa ct s / playwright -
+report /"
+Listing 4.5.Extrait du script d’ex ´ecutionscripts/e2e-run.sh
+Page 44
+
+==================== PAGE 53 ====================
+
+WEBOGRAPHY Youssef BENYOUNES
+Webography
+[1] Odoo S.A.Odoo 18.0 Technical and Developer Documentation. 2024.URL: https://www.
+odoo.com/documentation/18.0/developer.html (visited on 08/29/2026).
+[2] Odoo S.A.Odoo ORM Reference API and Model Conventions. 2024.URL: https://www.
+odoo . com / documentation / 18 . 0 / developer / reference / backend / orm . html (visited on
+08/29/2026).
+[8] Docker Inc.Docker Documentation: Containerization and Multi-Container Orchestra-
+tion. 2024.URL: https://docs.docker.com/ (visited on 08/29/2026).
+Page 45
+
+==================== PAGE 54 ====================
+
+BIBLIOGRAPHY Youssef BENYOUNES
+Bibliography
+[3] Robert C. Martin.Clean Code: A Handbook of Agile Software Craftsmanship. Prentice
+Hall, 2008.
+[4] International Organization for Standardization.ISO 55000: Asset management —
+Overview, principles and terminology. ISO Geneva, 2014.
+[5] Patrick O’Connor and Andre Kleyner.Practical Reliability Engineering. 5th. John Wiley
+& Sons, 2012.
+[6] Ken Schwaber and Jeff Sutherland.The Scrum Guide: The Definitive Guide to Scrum: The
+Rules of the Game. Scrum.org, 2020.
+[7] Iacopo Pirozzi and Gabriele Righetti.PostgreSQL 15 High Performance: Master the art
+of optimizing PostgreSQL databases. Packt Publishing, 2023.
+Page 46

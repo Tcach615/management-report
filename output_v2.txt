@@ -1,0 +1,284 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex.fmt)
+ restricted \write18 enabled.
+entering extended mode
+(001-report.tex
+LaTeX2e <2025-11-01>
+L3 programming layer <2025-10-24>
+(enis-pfe-report.cls (E:\miktex\tex/latex/silence\silence.sty)
+(E:\miktex\tex/latex/base\report.cls
+Document Class: report 2025/01/22 v1.4n Standard LaTeX document class
+(E:\miktex\tex/latex/base\size12.clo))
+(E:\miktex\tex/latex/geometry\geometry.sty
+(E:\miktex\tex/latex/graphics\keyval.sty)
+(E:\miktex\tex/generic/iftex\ifvtex.sty (E:\miktex\tex/generic/iftex\iftex.sty)
+) (E:\miktex\tex/latex/geometry\geometry.cfg))
+(E:\miktex\tex/latex/environ\environ.sty
+(E:\miktex\tex/latex/trimspaces\trimspaces.sty))
+(E:\miktex\tex/latex/verse\verse.sty) (E:\miktex\tex/latex/xcolor\xcolor.sty
+(E:\miktex\tex/latex/graphics-cfg\color.cfg)
+(E:\miktex\tex/latex/graphics-def\pdftex.def)
+(E:\miktex\tex/latex/graphics\mathcolor.ltx))
+(E:\miktex\tex/latex/colortbl\colortbl.sty (E:\miktex\tex/latex/tools\array.sty
+)) (E:\miktex\tex/latex/titlesec\titlesec.sty)
+(E:\miktex\tex/latex/chngcntr\chngcntr.sty)
+(E:\miktex\tex/latex/fancyhdr\fancyhdr.sty)
+(E:\miktex\tex/latex/caption\caption.sty
+(E:\miktex\tex/latex/caption\caption3.sty))
+(E:\miktex\tex/latex/caption\subcaption.sty)
+(E:\miktex\tex/latex/hyperref\hyperref.sty
+(E:\miktex\tex/latex/kvsetkeys\kvsetkeys.sty)
+(E:\miktex\tex/generic/kvdefinekeys\kvdefinekeys.sty)
+(E:\miktex\tex/generic/pdfescape\pdfescape.sty
+(E:\miktex\tex/generic/ltxcmds\ltxcmds.sty)
+(E:\miktex\tex/generic/pdftexcmds\pdftexcmds.sty
+(E:\miktex\tex/generic/infwarerr\infwarerr.sty)))
+(E:\miktex\tex/latex/hycolor\hycolor.sty)
+(E:\miktex\tex/latex/hyperref\nameref.sty
+(E:\miktex\tex/latex/refcount\refcount.sty)
+(E:\miktex\tex/generic/gettitlestring\gettitlestring.sty
+(E:\miktex\tex/latex/kvoptions\kvoptions.sty)))
+(E:\miktex\tex/latex/etoolbox\etoolbox.sty)
+(E:\miktex\tex/generic/stringenc\stringenc.sty)
+(E:\miktex\tex/latex/hyperref\pd1enc.def)
+(E:\miktex\tex/generic/intcalc\intcalc.sty)
+(E:\miktex\tex/latex/hyperref\puenc.def) (E:\miktex\tex/latex/url\url.sty)
+(E:\miktex\tex/generic/bitset\bitset.sty
+(E:\miktex\tex/generic/bigintcalc\bigintcalc.sty)))
+(E:\miktex\tex/latex/hyperref\hpdftex.def
+(E:\miktex\tex/latex/rerunfilecheck\rerunfilecheck.sty
+(E:\miktex\tex/generic/uniquecounter\uniquecounter.sty)))
+(E:\miktex\tex/latex/needspace\needspace.sty)
+(E:\miktex\tex/latex/pdfpages\pdfpages.sty (E:\miktex\tex/latex/base\ifthen.sty
+) (E:\miktex\tex/latex/tools\calc.sty) (E:\miktex\tex/latex/eso-pic\eso-pic.sty
+) (E:\miktex\tex/latex/graphics\graphicx.sty
+(E:\miktex\tex/latex/graphics\graphics.sty
+(E:\miktex\tex/latex/graphics\trig.sty)
+(E:\miktex\tex/latex/graphics-cfg\graphics.cfg)))
+(E:\miktex\tex/latex/pdfpages\pppdftex.def))
+(E:\miktex\tex/latex/enumitem\enumitem.sty)
+(E:\miktex\tex/latex/footmisc\footmisc.sty))
+(E:\miktex\tex/latex/tcolorbox\tcolorbox.sty
+(E:\miktex\tex/latex/pgf/frontendlayer\tikz.sty
+(E:\miktex\tex/latex/pgf/basiclayer\pgf.sty
+(E:\miktex\tex/latex/pgf/utilities\pgfrcs.sty
+(E:\miktex\tex/generic/pgf/utilities\pgfutil-common.tex)
+(E:\miktex\tex/generic/pgf/utilities\pgfutil-latex.def)
+(E:\miktex\tex/generic/pgf/utilities\pgfrcs.code.tex
+(E:\miktex\tex/generic/pgf\pgf.revision.tex)))
+(E:\miktex\tex/latex/pgf/basiclayer\pgfcore.sty
+(E:\miktex\tex/latex/pgf/systemlayer\pgfsys.sty
+(E:\miktex\tex/generic/pgf/systemlayer\pgfsys.code.tex
+(E:\miktex\tex/generic/pgf/utilities\pgfkeys.code.tex
+(E:\miktex\tex/generic/pgf/utilities\pgfkeyslibraryfiltered.code.tex))
+(E:\miktex\tex/generic/pgf/systemlayer\pgf.cfg)
+(E:\miktex\tex/generic/pgf/systemlayer\pgfsys-pdftex.def
+(E:\miktex\tex/generic/pgf/systemlayer\pgfsys-common-pdf.def)))
+(E:\miktex\tex/generic/pgf/systemlayer\pgfsyssoftpath.code.tex)
+(E:\miktex\tex/generic/pgf/systemlayer\pgfsysprotocol.code.tex))
+(E:\miktex\tex/generic/pgf/basiclayer\pgfcore.code.tex
+(E:\miktex\tex/generic/pgf/math\pgfmath.code.tex
+(E:\miktex\tex/generic/pgf/math\pgfmathutil.code.tex)
+(E:\miktex\tex/generic/pgf/math\pgfmathparser.code.tex)
+(E:\miktex\tex/generic/pgf/math\pgfmathfunctions.code.tex)
+(E:\miktex\tex/generic/pgf/math\pgfmathfunctions.basic.code.tex)
+(E:\miktex\tex/generic/pgf/math\pgfmathfunctions.trigonometric.code.tex)
+(E:\miktex\tex/generic/pgf/math\pgfmathfunctions.random.code.tex)
+(E:\miktex\tex/generic/pgf/math\pgfmathfunctions.comparison.code.tex)
+(E:\miktex\tex/generic/pgf/math\pgfmathfunctions.base.code.tex)
+(E:\miktex\tex/generic/pgf/math\pgfmathfunctions.round.code.tex)
+(E:\miktex\tex/generic/pgf/math\pgfmathfunctions.misc.code.tex)
+(E:\miktex\tex/generic/pgf/math\pgfmathfunctions.integerarithmetics.code.tex)
+(E:\miktex\tex/generic/pgf/math\pgfmathcalc.code.tex)
+(E:\miktex\tex/generic/pgf/math\pgfmathfloat.code.tex))
+(E:\miktex\tex/generic/pgf/math\pgfint.code.tex)
+(E:\miktex\tex/generic/pgf/basiclayer\pgfcorepoints.code.tex)
+(E:\miktex\tex/generic/pgf/basiclayer\pgfcorepathconstruct.code.tex)
+(E:\miktex\tex/generic/pgf/basiclayer\pgfcorepathusage.code.tex)
+(E:\miktex\tex/generic/pgf/basiclayer\pgfcorescopes.code.tex)
+(E:\miktex\tex/generic/pgf/basiclayer\pgfcoregraphicstate.code.tex)
+(E:\miktex\tex/generic/pgf/basiclayer\pgfcoretransformations.code.tex)
+(E:\miktex\tex/generic/pgf/basiclayer\pgfcorequick.code.tex)
+(E:\miktex\tex/generic/pgf/basiclayer\pgfcoreobjects.code.tex)
+(E:\miktex\tex/generic/pgf/basiclayer\pgfcorepathprocessing.code.tex)
+(E:\miktex\tex/generic/pgf/basiclayer\pgfcorearrows.code.tex)
+(E:\miktex\tex/generic/pgf/basiclayer\pgfcoreshade.code.tex)
+(E:\miktex\tex/generic/pgf/basiclayer\pgfcoreimage.code.tex)
+(E:\miktex\tex/generic/pgf/basiclayer\pgfcoreexternal.code.tex)
+(E:\miktex\tex/generic/pgf/basiclayer\pgfcorelayers.code.tex)
+(E:\miktex\tex/generic/pgf/basiclayer\pgfcoretransparency.code.tex)
+(E:\miktex\tex/generic/pgf/basiclayer\pgfcorepatterns.code.tex)
+(E:\miktex\tex/generic/pgf/basiclayer\pgfcorerdf.code.tex)))
+(E:\miktex\tex/generic/pgf/modules\pgfmoduleshapes.code.tex)
+(E:\miktex\tex/generic/pgf/modules\pgfmoduleplot.code.tex)
+(E:\miktex\tex/latex/pgf/compatibility\pgfcomp-version-0-65.sty)
+(E:\miktex\tex/latex/pgf/compatibility\pgfcomp-version-1-18.sty))
+(E:\miktex\tex/latex/pgf/utilities\pgffor.sty
+(E:\miktex\tex/latex/pgf/utilities\pgfkeys.sty
+(E:\miktex\tex/generic/pgf/utilities\pgfkeys.code.tex))
+(E:\miktex\tex/latex/pgf/math\pgfmath.sty
+(E:\miktex\tex/generic/pgf/math\pgfmath.code.tex))
+(E:\miktex\tex/generic/pgf/utilities\pgffor.code.tex))
+(E:\miktex\tex/generic/pgf/frontendlayer/tikz\tikz.code.tex
+(E:\miktex\tex/generic/pgf/libraries\pgflibraryplothandlers.code.tex)
+(E:\miktex\tex/generic/pgf/modules\pgfmodulematrix.code.tex)
+(E:\miktex\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibrarytopaths.code
+.tex))) (E:\miktex\tex/latex/tools\verbatim.sty)
+(E:\miktex\tex/latex/tcolorbox\tcbskins.code.tex
+Library (tcolorbox): 'tcbskins.code.tex' version '6.8.0'
+(E:\miktex\tex/latex/tikzfill\tikzfill.image.sty
+(E:\miktex\tex/latex/tikzfill\tikzfill-common.sty)
+(E:\miktex\tex/latex/tikzfill\tikzlibraryfill.image.code.tex))
+(E:\miktex\tex/latex/tcolorbox\tcbskinsjigsaw.code.tex
+Library (tcolorbox): 'tcbskinsjigsaw.code.tex' version '6.8.0'
+))) (E:\miktex\tex/generic/babel\babel.sty
+(E:\miktex\tex/generic/babel\txtbabel.def)
+*************************************
+* Local config file bblopts.cfg used
+*
+(E:\miktex\tex/latex/arabi\bblopts.cfg)
+(E:\miktex\tex/generic/babel/locale/en\babel-english.tex)
+(E:\miktex\tex/generic/babel-french\francais.ldf)
+(E:\miktex\tex/latex/babel-english\english.ldf))
+(E:\miktex\tex/latex/tools\varioref.sty)
+(E:\miktex\tex/latex/adjustbox\adjustbox.sty
+(E:\miktex\tex/latex/xkeyval\xkeyval.sty
+(E:\miktex\tex/generic/xkeyval\xkeyval.tex
+(E:\miktex\tex/generic/xkeyval\xkvutils.tex)))
+(E:\miktex\tex/latex/adjustbox\adjcalc.sty)
+(E:\miktex\tex/latex/adjustbox\trimclip.sty
+(E:\miktex\tex/latex/collectbox\collectbox.sty)
+(E:\miktex\tex/latex/adjustbox\tc-pdftex.def))
+(E:\miktex\tex/latex/ifoddpage\ifoddpage.sty)
+(E:\miktex\tex/latex/varwidth\varwidth.sty)
+==> First Aid for varwidth.sty applied!
+) (E:\miktex\tex/latex/acro\acro.sty
+(E:\miktex\tex/latex/l3packages/l3keys2e\l3keys2e.sty
+(E:\miktex\tex/latex/l3kernel\expl3.sty
+(E:\miktex\tex/latex/l3backend\l3backend-pdftex.def)))
+(E:\miktex\tex/latex/translations\translations.sty))
+==> First Aid for acro.sty applied!
+(E:\miktex\tex/latex/setspace\setspace.sty)
+(E:\miktex\tex/latex/minted\minted.sty
+(E:\miktex\tex/generic/catchfile\catchfile.sty
+(E:\miktex\tex/generic/etexcmds\etexcmds.sty))
+(E:\miktex\tex/latex/fvextra\fvextra.sty
+(E:\miktex\tex/latex/fancyvrb\fancyvrb.sty)
+(E:\miktex\tex/latex/upquote\upquote.sty)
+(E:\miktex\tex/latex/lineno\lineno.sty))
+(E:\miktex\tex/latex/latex2pydata\latex2pydata.sty)
+(E:\miktex\tex/latex/pgfopts\pgfopts.sty)
+(E:\miktex\tex/latex/tools\shellesc.sty) (E:\miktex\tex/latex/float\float.sty))
+ (E:\miktex\tex/latex/tools\tabularx.sty)
+(E:\miktex\tex/latex/ctable\ctable.sty (E:\miktex\tex/generic/iftex\ifpdf.sty)
+(E:\miktex\tex/latex/booktabs\booktabs.sty)
+(E:\miktex\tex/latex/graphics\rotating.sty))
+(E:\miktex\tex/latex/multirow\multirow.sty)
+(E:\miktex\tex/latex/seqsplit\seqsplit.sty)
+(E:\miktex\tex/latex/base\fontenc.sty (E:\miktex\tex/latex/psnfss\ot1ptm.fd))
+(E:\miktex\tex/latex/wrapfig\wrapfig.sty)
+(E:\miktex\tex/latex/nowidow\nowidow.sty)
+(E:\miktex\tex/latex/biblatex\biblatex.sty
+(E:\miktex\tex/latex/logreq\logreq.sty (E:\miktex\tex/latex/logreq\logreq.def))
+(E:\miktex\tex/latex/biblatex\blx-dm.def)
+(E:\miktex\tex/latex/biblatex\blx-compat.def)
+(E:\miktex\tex/latex/biblatex\blx-bibtex.def)
+(E:\miktex\tex/latex/biblatex\biblatex.def)
+(E:\miktex\tex/latex/biblatex/bbx\numeric.bbx
+(E:\miktex\tex/latex/biblatex/bbx\standard.bbx))
+(E:\miktex\tex/latex/biblatex/cbx\numeric.cbx)
+(E:\miktex\tex/latex/biblatex\biblatex.cfg)
+(E:\miktex\tex/latex/biblatex\blx-case-expl3.sty
+(E:\miktex\tex/latex/l3packages/xparse\xparse.sty))) (000-commands.tex)
+No file report_v2.aux.
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+(E:\miktex\tex/context/base/mkii\supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+) (E:\miktex\tex/latex/epstopdf-pkg\epstopdf-base.sty
+(E:\miktex\tex/latex/00miktex\epstopdf-sys.cfg))
+(E:\miktex\tex/latex/ragged2e\ragged2e.sty)
+(E:\miktex\tex/latex/pdflscape\pdflscape.sty
+(E:\miktex\tex/latex/pdflscape\pdflscape-nometadata.sty
+(E:\miktex\tex/latex/graphics\lscape.sty)))
+(E:\miktex\tex/latex/translations/dicts\translations-basic-dictionary-english.t
+rsl)
+(E:\miktex\tex/latex/translations/dicts\translations-basic-dictionary-french.tr
+sl) (E:\miktex\tex/latex/biblatex/lbx\english.lbx)
+No file report_v2.bbl.
+(002-top_matter.tex [1{C:/Users/DJO/AppData/Local/MiKTeX/fonts/map/pdftex/pdfte
+x.map}{E:/miktex/fonts/enc/dvips/base/8r.enc} <./images/logo-enis.pdf>])
+(003-thanks.tex
+Underfull \hbox (badness 10000) in paragraph at lines 6--6
+
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.i}) has 
+been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.37 \cleardoublepage
+                     % [1]
+Underfull \hbox (badness 10000) in paragraph at lines 38--38
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 42--43
+
+) [2]
+Underfull \hbox (badness 10000) in paragraph at lines 129--129
+
+No file report_v2.toc.
+[3]
+Underfull \hbox (badness 10000) in paragraph at lines 129--129
+
+No file report_v2.lof.
+[4]
+Underfull \hbox (badness 10000) in paragraph at lines 129--129
+
+[5] (004-chapter1-context.tex
+Chapter 1.
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--1
+
+) [1] [2] (004-chapter2-analysis.tex
+Chapter 2.
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--1
+
+(E:\miktex\tex/latex/psnfss\ts1ptm.fd)) [3] [4] (004-chapter3-realization.tex
+Chapter 3.
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--1
+
+) [5] [6] (004-chapter4-bilan.tex
+Chapter 4.
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--1
+
+) [7] (005-conclusion.tex
+Underfull \hbox (badness 10000) in paragraph at lines 6--6
+
+) [8] (006-appendix.tex
+Underfull \hbox (badness 10000) in paragraph at lines 6--6
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 11--12
+
+) [9] (007-references.tex) [10
+\@writefile{toc}{\contentsline {chapter}{Webography}{10}{section*.8}\protected@
+file@percent }
+\@writefile{toc}{\contentsline {chapter}{Bibliography}{10}{section*.9}\protecte
+d@file@percent }
+ <./008-abstract.pdf>]
+
+Package acro Warning: Empty acronym list. If you have used acronyms then
+(acro)                re-compile to get the list filled. Otherwise remove
+(acro)                \printacronyms
+
+(report_v2.aux (002-top_matter.aux) (003-thanks.aux) (004-chapter1-context.aux)
+(004-chapter2-analysis.aux) (004-chapter3-realization.aux)
+(004-chapter4-bilan.aux) (005-conclusion.aux) (006-appendix.aux)
+(007-references.aux)) )
+(see the transcript file for additional information)<E:/miktex/fonts/type1/urw/
+times/utmb8a.pfb><E:/miktex/fonts/type1/urw/times/utmbi8a.pfb><E:/miktex/fonts/
+type1/urw/times/utmr8a.pfb><E:/miktex/fonts/type1/urw/times/utmri8a.pfb>
+Output written on report_v2.pdf (16 pages, 342901 bytes).
+Transcript written on report_v2.log.

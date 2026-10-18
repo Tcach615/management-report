@@ -1,0 +1,28 @@
+\chapter*{Introduction Générale}
+\label{chap:general_introduction}
+\markboth{\MakeUppercase{Introduction Générale}}{}
+\addcontentsline{toc}{chapter}{Introduction Générale}
+
+Dans le contexte industriel contemporain, la gestion efficace et prédictive des actifs matériels constitue un pilier stratégique pour la pérennité opérationnelle et la compétitivité financière des entreprises. Les pannes inopinées d'équipements entraînent non seulement des arrêts de production coûteux et une dégradation de la qualité de service, mais augmentent également de manière exponentielle les dépenses de maintenance corrective d'urgence. Face à cette réalité, la transformation numérique des processus de maintenance industrielle au sein des systèmes intégrés de gestion (Enterprise Resource Planning - ERP) s'impose comme une nécessité impérieuse.
+
+Ce projet de fin d'études et de stage d'ingénieur s'inscrit au cœur de cette problématique et a été réalisé au sein de l'entreprise suisse \textbf{\companyName} et de sa filiale de développement \textbf{\companySubsidiary} (Groupe \companyGroup). L'objectif central de ce stage consiste en la conception, le développement, la refactorisation et la validation opérationnelle d'un module ERP complet dédié à la gestion globale des équipements et à l'ordonnancement intelligent de la maintenance : le module \textbf{\odooModule}, développé spécifiquement pour la plateforme de nouvelle génération \textbf{\odooVersion}.
+
+Le système conçu adresse l'ensemble du cycle de vie des actifs industriels à travers trois phases d'ingénierie majeures : 
+\begin{itemize}[leftmargin=1.5cm, label=\textcolor{odooPurple}{\small\textbullet}]
+    \item \textbf{Phase 1 (Cœur de Maintenance Industrielle)} : enregistrement détaillé du parc d'équipements avec arborescence multi-sites, traçabilité par codes QR, planification périodique d'ordres préventifs, traitement fluide des requêtes de réparation d'urgence, gestion fine des pièces de rechange consommées, contrôle des coûts consolidés et génération de rapports vectoriels QWeb PDF.
+    \item \textbf{Phase 2 (Analytique et Décision Prédictive)} : formulation mathématique d'un indice de santé dynamique (\textit{Equipment Health Score}), prédiction statistique des risques de défaillance (MTBF/MTTR), projection budgétaire des coûts de maintenance par moyennes mobiles pondérées et conseil d'aide au remplacement de machines.
+    \item \textbf{Phase 3 (Couche IA Conversationnelle \& BYO-LLM)} : intégration d'une architecture multi-fournisseurs (Google Gemini et Cerebras) permettant la journalisation d'interventions en langage naturel et l'interaction avec un assistant conversationnel intelligent doté d'une isolation stricte des outils et d'un flux de confirmation explicite pour les opérations d'écriture.
+\end{itemize}
+
+Afin de garantir une intégration robuste et pérenne dans l'écosystème Odoo 18, ce projet intègre une démarche rigoureuse d'ingénierie logicielle combinant la méthodologie Agile/Scrum, la modélisation formelle UML, les principes du Clean Code, et une stratégie complète d'assurance qualité multi-niveaux. Cette stratégie associe une suite backend de \textbf{138 tests unitaires} (100\% de réussite sur base saine), \textbf{46 tests mock} d'intégration LLM, des tests de validation d'API en direct, ainsi qu'une campagne de tests \textit{End-to-End} (E2E) sous le framework \textbf{Playwright} comprenant \textbf{32 tests automatisés} validant l'ergonomie, la navigation inter-vues et les flux utilisateurs réels.
+
+Le présent rapport est articulé en quatre chapitres principaux suivis d'une conclusion et d'annexes techniques :
+
+\begin{itemize}[leftmargin=1.5cm, label=\textcolor{odooPurple}{\small\textbullet}]
+    \item \textbf{Chapitre 1 : Contexte Général et Cadre du Projet} présente le profil de \textbf{\companyName} et de sa filiale tunisienne, formule les enjeux de la maintenance pour les PME industrielles, explicite les objectifs assignés et détaille la démarche méthodologique Agile/Scrum adoptée.
+    \item \textbf{Chapitre 2 : Analyse des Besoins et Conception Formelle} expose l'analyse exhaustive des exigences fonctionnelles et non fonctionnelles (incluant la structure géographique multi-sites et les exigences d'interface), formalise les cas d'utilisation par profil d'acteur et établit les diagrammes conceptuels UML.
+    \item \textbf{Chapitre 3 : Architecture Système, Implémentation et Validation} détaille l'architecture logicielle multi-niveaux, la spécification des modèles ORM et de la couche BYO-LLM, les algorithmes prédictifs, les 15 refactorisations critiques sous Odoo 18, ainsi que la télémétrie complète d'assurance qualité (138 tests backend, 46 tests mock, tests live API, et la suite complète de 32 tests de navigation et de vues sous Playwright avec capture de vidéos de démonstration).
+    \item \textbf{Chapitre 4 : Bilan du Projet et Retour d'Expérience} dresse le bilan technique, organisationnel et humain du stage, analyse les compétences développées et met en relief les solutions apportées aux défis majeurs rencontrés durant la migration, la sécurisation des LLM et l'automatisation des tests navigateur.
+\end{itemize}
+
+Enfin, une conclusion générale synthétise les apports scientifiques et professionnels de ce travail et trace les perspectives d'évolution future vers la maintenance prédictive assistée par l'Internet des Objets (IoT) et l'apprentissage automatique supervisé.

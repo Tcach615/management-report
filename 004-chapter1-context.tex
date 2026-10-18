@@ -1,0 +1,138 @@
+\chapter{Contexte Général et Cadre du Projet}
+\label{chap:context}
+
+\section{Introduction}
+Ce premier chapitre ancre le projet dans son environnement professionnel, économique et académique. Nous présentons de manière approfondie l'organisme d'accueil, la société suisse \textbf{\companyName}, ainsi que son centre d'ingénierie et de développement \textbf{\companySubsidiary}. Nous analysons ensuite les enjeux contemporains liés à la maintenance industrielle et à la gestion des actifs physiques pour les Petites et Moyennes Entreprises (PME). Enfin, nous formalisons la problématique opérationnelle, les objectifs assignés à ce stage d'ingénieur et la démarche méthodologique Agile/Scrum adoptée pour concevoir et valider le module \textbf{\odooModule}.
+
+\section{Présentation de l'Organisme d'Accueil}
+
+\subsection{Profil et Historique de IT-Koncept SA}
+Fondée en 2013 et immatriculée au Registre du Commerce suisse sous le numéro d'identification des entreprises \textbf{CHE-229.451.519}, \textbf{\companyName} est une société anonyme suisse de services et de conseil informatiques de référence. Elle fait partie intégrante du groupe \textbf{\companyGroup}.
+
+Initialement établie à Mies dans le canton de Vaud, l'entreprise a transféré son siège social au \textbf{Route du Stand 68, 1260 Nyon (Suisse)} en septembre 2023 afin d'accompagner sa forte croissance. Ayant célébré ses 10 années d'activité en mars 2024, la structure dispose d'un capital-actions porté à \textbf{500\,000 CHF}, témoignant d'une assise financière solide et d'un engagement constant dans l'investissement technologique et l'innovation numérique.
+
+La gouvernance et la direction générale de l'entreprise s'articulent autour de dirigeants chevronnés :
+\begin{itemize}[leftmargin=1.5cm, label=\textcolor{odooPurple}{\small\textbullet}]
+    \item \textbf{M. Alain Lacroix} (Directeur Général / CEO) : fort de plus de 35 ans d'expérience dans les technologies de l'information, la conduite de grands projets de transformation numérique et l'expertise en protection des données (LPD suisse / RGPD européen) ;
+    \item \textbf{M. Florian Frossard} (Directeur Associé / COO \& Administrateur-Président) : cofondateur, garant de l'excellence opérationnelle et du déploiement stratégique des solutions applicatives ;
+    \item \textbf{M. Aymen Alaya} (Directeur de Projet / Encadrant Industriel) : pilote des architectures logicielles et de l'encadrement technique des projets d'intégration ERP.
+\end{itemize}
+
+\subsection{Filiale d'Ingénierie : IT-Koncept Tunisia Sàrl}
+Pour soutenir sa compétitivité internationale et disposer d'un pôle d'ingénierie logicielle d'élite, IT-Koncept opère à travers sa filiale tunisienne \textbf{\companySubsidiary}, implantée au \textbf{10 Avenue Abderrahmen Azzam, 1073 Bab El Bhar, Tunis}.
+
+Cette filiale constitue un véritable centre de recherche, développement et livraison logicielle (\textit{Delivery Center}) en synergie directe avec les opérations suisses. Elle regroupe des ingénieurs hautement qualifiés spécialisés dans le framework open-source \textbf{Odoo}, intervenant sur le développement modulaire avancé, la refactorisation d'architectures d'entreprise, ainsi que l'intégration de progiciels pour la comptabilité, les ressources humaines, la gestion des stocks, le CRM et la gestion de production.
+
+\subsection{Positionnement Stratégique et Partenariats d'Excellence}
+IT-Koncept se positionne comme un partenaire informatique global (\textit{End-to-End IT Partner}), capable d'adresser l'ensemble des besoins numériques d'une organisation, évitant ainsi le morcellement des prestataires. Son offre s'organise autour de pôles de compétences complémentaires :
+\begin{itemize}[leftmargin=1.5cm, label=\textcolor{odooPurple}{\small\textbullet}]
+    \item \textbf{Solutions ERP d'Entreprise} : Partenaire officiel \textbf{Odoo} fort de plus de 8 années d'expertise continue (de la version V7 à la version V18) sur des architectures modulaires complexes, combiné à des progiciels métier propriétaires ;
+    \item \textbf{Gestion de la Relation Client (CRM)} : Intégrateur officiel certifié en Suisse pour \textbf{Efficy CRM}, avec interconnexion temps réel aux systèmes ERP ;
+    \item \textbf{Infrastructures Informatiques \& Services Managés} : Partenaire certifié \textbf{Swisscom Gold}, assurant l'infogérance de parcs serveurs, les réseaux d'entreprise et les solutions Smart ICT ;
+    \item \textbf{Conformité et Sécurité des Données} : Accompagnement spécialisé pour la mise en conformité avec la nouvelle Loi suisse sur la Protection des Données (nLPD) et le RGPD ;
+    \item \textbf{Comptabilité Digitale} : Prestations de gestion financière et administrative digitalisée sous la marque dédiée \textit{AC-Koncept}.
+\end{itemize}
+
+L'entreprise dessert principalement les PME suisses de Suisse romande (bassins de Nyon, Genève et canton de Vaud) ainsi que des institutions publiques et privées d'envergure. Parmi ses références notables figurent le \textit{Genève-Servette Hockey Club}, \textit{ArsPanis Suisse SA (Panino Giusto)}, \textit{Securelec}, \textit{Areas Genève}, \textit{Swisscom}, \textit{Migros}, \textit{Fnac}, \textit{BBGI Group}, \textit{Swiss Language Group} et \textit{Perrin Holding}.
+
+La devise stratégique de l'entreprise résume sa vision :
+\begin{quote}
+\itshape
+« Conjuguer innovation, qualité et sécurité numérique pour bâtir l'avenir avec nos clients et partenaires. »
+\end{quote}
+
+\begin{figure}[!ht]
+    \centering
+    \begin{tikzpicture}[
+        node distance=1.8cm and 1.2cm,
+        every node/.style={align=center, font=\small},
+        central/.style={circle, draw=odooPurple, fill=lightPurple, very thick, minimum size=3cm, font=\bfseries\color{odooPurple}},
+        partner/.style={rectangle, draw=odooDark, fill=white, rounded corners=5pt, thick, minimum height=1.1cm, minimum width=3.2cm}
+    ]
+        % Central Node
+        \node[central] (center) {Projet\\Equipment\\Maintenance};
+
+        % Partners & Ecosystem
+        \node[partner, above=of center] (itk) {\textbf{\companyName}\\Stratégie, Siège Nyon \& PME};
+        \node[partner, right=of center] (itkt) {\textbf{\companySubsidiary}\\Pôle R\&D \& Ingénierie Odoo};
+        \node[partner, below=of center] (iteam) {\textbf{\ENIS}\\Encadrement Académique};
+        \node[partner, left=of center] (odoo) {\textbf{Écosystème Odoo 18}\\Partenaire Officiel \& ORM};
+
+        % Connections
+        \draw[->, very thick, odooPurple] (itk) -- (center);
+        \draw[->, very thick, odooBlue] (itkt) -- (center);
+        \draw[->, very thick, midGray] (iteam) -- (center);
+        \draw[->, very thick, greenOk] (odoo) -- (center);
+
+    \end{tikzpicture}
+    \caption{Écosystème institutionnel, technologique et organisationnel du projet}
+    \label{fig:stakeholders_ecosystem}
+\end{figure}
+
+\section{Problématique Industrielle : Les Défis de la Gestion de Maintenance pour les PME}
+Pour les PME industrielles et de services gérant des parcs d'équipements hétérogènes (lignes d'assemblage, serveurs, parcs machines, outillages techniques), la maintenance représente un centre de coût critique et un enjeu direct de compétitivité. L'analyse des processus existants met en exergue cinq défaillances majeures :
+
+\begin{enumerate}[leftmargin=1.2cm, label=\textbf{\arabic*.}]
+    \item \textbf{Prédominance de la maintenance corrective d'urgence} : Sans outil d'ordonnancement automatisé, les interventions s'effectuent après la panne (\textit{run-to-failure}), entraînant des arrêts de production non planifiés (\textit{Unscheduled Downtime}) dont le coût horaire peut dépasser plusieurs milliers de francs suisses.
+    \item \textbf{Complexité de la gestion géographique multi-sites} : Les entreprises exploitent fréquemment des actifs disséminés sur plusieurs sites géographiques, bâtiments, étages et baies techniques. L'absence d'une hiérarchie spatiale rigoureuse pénalise la localisation rapide des équipements lors des interventions.
+    \item \textbf{Difficulté d'identification et de traçabilité terrain} : Les techniciens de maintenance perdent un temps substantiel à identifier les machines sur place et à consulter les manuels techniques et historiques de pannes.
+    \item \textbf{Manque de synchronisation des pièces de rechange} : Les pièces de maintenance sont souvent consommées sans décrémentation automatique des inventaires ERP, générant des ruptures de stock inopinées et une méconnaissance du coût de revient réel de chaque intervention.
+    \item \textbf{Absence d'aide prédictive à la décision et d'assistance moderne} : Les responsables d'exploitation manquent d'indicateurs synthétiques d'usure (scores de santé), de prévisions de pannes et d'outils interactifs permettant aux techniciens de consigner des rapports en langage naturel directement depuis le terrain.
+\end{enumerate}
+
+\section{Objectifs du Projet}
+Pour répondre à ces exigences d'ingénierie et doter IT-Koncept d'un module de pointe pour ses clients industriels, le projet a été structuré autour des objectifs opérationnels suivants :
+
+\begin{itemize}[leftmargin=1.5cm, label=\textcolor{odooPurple}{\small\textbullet}]
+    \item \textbf{Registre Centralisé et Gestion Multi-Sites} : Modélisation complète des équipements avec arborescence géographique stricte (\textit{Site $\rightarrow$ Bâtiment $\rightarrow$ Étage $\rightarrow$ Salle $\rightarrow$ Baie}), suivi des garanties et génération dynamique de codes QR vectoriels pour identification mobile instantanée.
+    \item \textbf{Ordonnancement Préventif et Workflow Correctif} : Automatisation de la génération périodique d'ordres de travail par des tâches planifiées d'arrière-plan (\textit{ir.cron}) et traitement structuré des demandes d'intervention d'urgence.
+    \item \textbf{Maîtrise des Stocks et Traçabilité Financière} : Liaison directe avec le module standard de gestion des stocks d'Odoo (\texttt{stock}) pour imputer la consommation des pièces et calculer automatiquement les coûts consolidés de chaque intervention.
+    \item \textbf{Algorithmique Prédictive et Décisionnelle (Phase 2)} : Élaboration d'un indice de santé dynamique (\textit{Health Score}), calcul d'un score de risque de défaillance multicritère, projection budgétaire par moyennes mobiles pondérées et conseil technico-économique au remplacement d'équipement.
+    \item \textbf{Couche d'IA Conversationnelle \& BYO-LLM (Phase 3)} : Conception d'une passerelle multi-fournisseurs (Google Gemini et Cerebras) permettant la journalisation en langage naturel et l'assistance conversationnelle avec validation explicite des écritures et isolation stricte des outils.
+    \item \textbf{Assurance Qualité et Validation de Navigation (Phase Finale)} : Couverture complète par 138 tests backend, 46 tests mock LLM, tests d'API en direct et une suite E2E Playwright de 32 tests validant l'ensemble des vues et flux de navigation utilisateurs.
+\end{itemize}
+
+\section{Démarche Méthodologique : Méthodologie Agile/Scrum}
+Afin de garantir une adaptation continue aux exigences techniques et assurer une collaboration étroite avec l'encadrant industriel de IT-Koncept, le projet a été conduit selon la méthodologie \textbf{Agile/Scrum}.
+
+\begin{figure}[!ht]
+    \centering
+    \begin{tikzpicture}[
+        every node/.style={align=center, font=\small},
+        sprint/.style={rectangle, draw=odooPurple, fill=lightPurple, rounded corners=6pt, very thick, minimum width=2.8cm, minimum height=1.4cm},
+        milestone/.style={ellipse, draw=odooBlue, fill=white, thick, minimum width=2.5cm, minimum height=1cm}
+    ]
+        \node[sprint] (s1) {\textbf{Sprint 1}\\Modélisation ORM\\\& Multi-Sites};
+        \node[sprint, right=0.8cm of s1] (s2) {\textbf{Sprint 2}\\Logique Métier\\Workflows \& Vues};
+        \node[sprint, right=0.8cm of s2] (s3) {\textbf{Sprint 3}\\Analytique \&\\Couche BYO-LLM};
+        \node[sprint, right=0.8cm of s3] (s4) {\textbf{Sprint 4}\\Refactorisation v18\\\& Tests E2E / DevOps};
+
+        \draw[->, very thick, odooPurple] (s1) -- (s2);
+        \draw[->, very thick, odooPurple] (s2) -- (s3);
+        \draw[->, very thick, odooPurple] (s3) -- (s4);
+
+        \node[milestone, below=0.8cm of s1] (m1) {Schéma DB \& Emplacements};
+        \node[milestone, below=0.8cm of s2] (m2) {Ordres, Pièces \& QR};
+        \node[milestone, below=0.8cm of s3] (m3) {Health Score \& Assistant};
+        \node[milestone, below=0.8cm of s4] (m4) {Suite E2E \& Backend Validés};
+
+        \draw[dashed, ->, odooBlue] (s1) -- (m1);
+        \draw[dashed, ->, odooBlue] (s2) -- (m2);
+        \draw[dashed, ->, odooBlue] (s3) -- (m3);
+        \draw[dashed, ->, odooBlue] (s4) -- (m4);
+
+    \end{tikzpicture}
+    \caption{Cycle de développement itératif et incrémental Agile/Scrum}
+    \label{fig:scrum_workflow}
+\end{figure}
+
+Le découpage du projet s'est articulé autour de quatre sprints successifs de deux semaines :
+\begin{itemize}[leftmargin=1.5cm, label=\textcolor{odooPurple}{\small\textbullet}]
+    \item \textbf{Sprint 1 (Fondations, Modèles de Données et Multi-Sites)} : Définition des entités métier du module, modélisation de l'arborescence multi-sites (\texttt{equipment.location}), matrice de sécurité CSV et registre des équipements.
+    \item \textbf{Sprint 2 (Workflows Métier, Pièces de Rechange et Vues UI)} : Implémentation du cycle de vie des ordres, intégration du stock de pièces, check-lists d'inspection, générateur de codes QR et conception des vues Kanban et formulaires.
+    \item \textbf{Sprint 3 (Analytique Décisionnelle, Health Score et Couche BYO-LLM)} : Intégration de la formule multicritère de l'indice de santé, algorithmes prédictifs statistiques et implémentation de l'interface d'IA générative (fournisseurs Gemini et Cerebras, journalisation en langage naturel et assistant conversationnel avec confirmation explicite).
+    \item \textbf{Sprint 4 (Refactorisation Odoo 18, Tests Backend et Tests E2E de Navigation)} : Application des 15 correctifs de compatibilité Odoo 18, développement de la suite backend de 138 tests unitaires, validation mock et live des LLM, et déploiement de la campagne de tests Playwright de 32 scénarios de navigation et d'interface utilisateur en environnement Docker conteneurisé.
+\end{itemize}
+
+\section{Conclusion}
+Ce chapitre a exposé les fondements institutionnels, industriels et méthodologiques du projet, en mettant en avant le positionnement de \textbf{\companyName} et l'apport d'ingénierie de \textbf{\companySubsidiary}. L'identification précise des besoins des PME suisses a permis d'orienter le développement vers une solution intégrée à forte valeur ajoutée. Le chapitre suivant présentera l'analyse approfondie des exigences et la modélisation formelle du système.

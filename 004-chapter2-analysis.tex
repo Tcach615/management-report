@@ -1,0 +1,433 @@
+\chapter{Analyse des Besoins et Conception Formelle}
+\label{chap:analysis}
+
+\section{Introduction}
+L'analyse des besoins et la modélisation conceptuelle constituent la clef de voûte du développement d'un module ERP industriel. Cette étape permet d'abstraire les flux opérationnels de maintenance observés sur le terrain au sein des PME clientes de \textbf{\companyName}, et de les structurer en exigences fonctionnelles, non fonctionnelles et modèles d'ingénierie logicielle. Ce chapitre détaille l'identification des profils d'acteurs, la spécification des exigences métier et d'interface de navigation, ainsi que la modélisation formelle UML (diagrammes de cas d'utilisation, diagramme de classes enrichi et diagrammes de séquence).
+
+\section{Identification des Acteurs du Système}
+L'exploitation du module \textbf{\odooModule} implique cinq profils d'utilisateurs aux responsabilités hiérarchisées :
+
+\begin{itemize}[leftmargin=1.5cm, label=\textcolor{odooPurple}{\small\textbullet}]
+    \item \textbf{Visiteur / Lecteur (\textit{Viewer})} : Utilisateur en consultation seule, habilité à visualiser la liste des équipements, l'arborescence des emplacements et les tableaux de bord sans droit de modification.
+    \item \textbf{Opérateur de Machine (\textit{Operator})} : Personnel de production sur site, capable de scanner les QR codes apposés sur les équipements et de consigner des demandes d'intervention d'urgence (\textit{Repair Requests}).
+    \item \textbf{Technicien de Maintenance (\textit{Technician})} : Spécialiste exécutant les ordres curatifs et préventifs. Il navigue entre ses ordres affectés, valide les check-lists, déclare les pièces de rechange consommées, utilise la journalisation en langage naturel et clôture les ordres de travail.
+    \item \textbf{Responsable de Maintenance (\textit{Maintenance Manager})} : Gestionnaire assurant la planification préventive, l'arbitrage des priorités, l'affectation des techniciens, le suivi des stocks de pièces détachées et l'analyse des projections budgétaires et de fiabilité.
+    \item \textbf{Administrateur Système (\textit{Administrator})} : Super-utilisateur assurant la configuration générale, la gestion des clés d'API des fournisseurs LLM (Gemini/Cerebras), la surveillance de la piste d'audit des prédictions et le paramétrage des accès de sécurité.
+\end{itemize}
+
+\section{Spécification Exhaustive des Exigences}
+
+\subsection{Exigences Fonctionnelles}
+Les exigences fonctionnelles du système sont organisées en huit piliers opérationnels :
+
+\begin{enumerate}[leftmargin=1.2cm, label=\textbf{EF\arabic*.}]
+    \item \textbf{Gestion Centralisée du Registre des Équipements} :
+    \begin{itemize}
+        \item Fiche signalétique complète (numéro de série, modèle, constructeur, date d'acquisition, valeur d'achat, fin de garantie, statut opérationnel).
+        \item Classification arborescente par familles et catégories d'équipements avec fréquences de révision par défaut.
+        \item Génération automatique et téléchargement d'un code QR vectoriel unique pour identification mobile instantanée.
+    \end{itemize}
+
+    \item \textbf{Gestion Géographique Multi-Sites et Hiérarchie Spatiale} :
+    \begin{itemize}
+        \item Modélisation arborescente stricte des emplacements physiques : \textit{Site géographie $\rightarrow$ Bâtiment $\rightarrow$ Étage $\rightarrow$ Salle / Atelier $\rightarrow$ Baie / Emplacement spécifique}.
+        \item Affectation précise de chaque machine dans la hiérarchie spatiale pour optimiser les temps d'intervention des techniciens.
+    \end{itemize}
+
+    \item \textbf{Planification et Ordonnancement Préventif Automatisé} :
+    \begin{itemize}
+        \item Définition de modèles de maintenance (\textit{Maintenance Templates}) réutilisables avec périodicités configurables (jours, semaines, mois, années).
+        \item Moteur de génération automatique d'ordres préventifs synchronisé avec l'ordonnanceur d'Odoo (\textit{ir.cron}).
+        \item Suivi des dates d'échéance avec alertes visuelles de dépassement.
+    \end{itemize}
+
+    \item \textbf{Demandes de Réparation et Maintenance Corrective} :
+    \begin{itemize}
+        \item Formulaire simplifié de déclaration de panne avec qualification des symptômes et niveau d'urgence.
+        \item Conversion en un clic d'une demande validée en Ordre de Maintenance officiel sans ressaisie.
+    \end{itemize}
+
+    \item \textbf{Exécution des Ordres de Travail et Protocoles d'Inspection} :
+    \begin{itemize}
+        \item Gestion rigoureuse du cycle de vie des ordres selon la machine d'états déterministe : \textit{Draft $\rightarrow$ Confirmed $\rightarrow$ In Progress $\rightarrow$ Done / Cancelled}.
+        \item Intégration de check-lists normalisées avec contrôle obligatoire pas-à-pas des points de vérification.
+    \end{itemize}
+
+    \item \textbf{Consommation de Pièces de Rechange et Suivi des Coûts} :
+    \begin{itemize}
+        \item Consignation des pièces consommées avec synchronisation temps réel des stocks (\texttt{stock.quant}).
+        \item Calcul dynamique et transparent du coût matière, du coût de main-d'œuvre et du coût total consolidé.
+    \end{itemize}
+
+    \item \textbf{Navigation Ergonomique et Vues Multi-Modalités} :
+    \begin{itemize}
+        \item Navigation par cartes Kanban enrichies (\texttt{t-name="card"}) avec indicateurs visuels d'état et badges couleur.
+        \item Navigation en liste groupée avec support du pliage/dépliage dynamique conforme au nouveau framework Odoo 18.
+        \item Navigation formulaire intuitive dotée d'un fil d'Ariane (\textit{breadcrumbs}), d'une barre de statut d'étapes et d'un volet d'activités (\textit{chatter}).
+        \item Vues de planification par calendrier, analyses graphiques (barres, camemberts) et tableaux croisés dynamiques (vues Pivot).
+        \item Tableaux de bord synthétiques interactifs avec drill-down immédiat vers les matériels critiques ou les ordres en retard.
+    \end{itemize}
+
+    \item \textbf{Aide Prédictive et Couche Conversationnelle BYO-LLM} :
+    \begin{itemize}
+        \item Calcul multicritère de l'indice de santé (\textit{Health Score} sur 100), prédiction statistique des risques de défaillance (MTBF/MTTR) et projection budgétaire des coûts futurs.
+        \item Assistant conversationnel et journalisation en langage naturel : extraction automatique des entités (équipement, symptômes, pièces de rechange) via LLM (Gemini/Cerebras).
+        \item Workflow de confirmation explicite pour les opérations d'écriture : affichage d'un aperçu avant validation manuelle et consignation dans la table d'audit (\texttt{equipment.ai.prediction}).
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Exigences Non-Fonctionnelles}
+Afin d'assurer une robustesse logicielle répondant aux standards suisses d'ingénierie et aux exigences d'IT-Koncept, les contraintes suivantes sont imposées :
+
+\begin{itemize}[leftmargin=1.5cm, label=\textcolor{odooPurple}{\small\textbullet}]
+    \item \textbf{Sécurité et Isolation des Outils LLM} : Le modèle d'intelligence artificielle ne dispose d'aucun accès direct aux couches SQL, ORM, shell ou système de fichiers. Les opérations s'exécutent exclusivement via des fonctions d'outils strictement typées et contrôlées par les droits d'accès Odoo (\textit{ir.model.access} et règles au niveau ligne).
+    \item \textbf{Confidentialité des Clés d'API} : Stockage chiffré des clés (\texttt{password=True}), restreint au groupe d'administration, sans jamais figurer dans les logs, rapports ou requêtes clientes.
+    \item \textbf{Performance et Temps de Réponse} : Réponses aux requêtes de consultation en moins de 250 ms grâce à un indexage optimisé des clés étrangères et l'usage de requêtes groupées performantes (\texttt{\_read\_group}).
+    \item \textbf{Conformité Stricte Odoo 18} : Élimination totale des attributs et méthodes dépréciées (adaptation du standard déclaratif OWL et des nouvelles structures de stockage).
+    \item \textbf{Testabilité Complète} : Couverture des fonctionnalités par une triple couche de tests : tests unitaires backend, tests mock d'intégration et tests E2E automatisant la navigation dans un navigateur Chromium réel.
+\end{itemize}
+
+\newpage
+\section{Modélisation Formelle UML}
+
+\subsection{Diagrammes de Cas d'Utilisation}
+
+\paragraph{Vue Générale des Cas d'Utilisation du Système}
+La figure \ref{fig:usecase_global} formalise les interactions globales entre les acteurs et les grands modules applicatifs du système.
+
+\begin{figure}[!ht]
+    \centering
+    \begin{adjustbox}{max width=0.95\textwidth}
+    \begin{tikzpicture}[
+        actor/.style={draw=odooDark, circle, minimum size=0.9cm, align=center, thick, fill=white},
+        usecase/.style={draw=odooPurple, fill=lightPurple, ellipse, minimum width=3.4cm, minimum height=0.75cm, align=center, font=\small},
+        systembox/.style={draw=odooDark, thick, rounded corners=6pt}
+    ]
+        % System Boundary
+        \draw[systembox] (-1.5, -9.0) rectangle (15.0, 7.5);
+        \node[font=\bfseries\color{odooPurple}] at (6.5, 7.0) {Système Equipment Maintenance Scheduler (IT-Koncept SA)};
+
+        % Actors
+        \node[actor] (op) at (-3.5, 4.0) {};
+        \node[below=0.05cm of op, font=\small\bfseries] {Opérateur};
+
+        \node[actor] (tech) at (-3.5, 0.5) {};
+        \node[below=0.05cm of tech, font=\small\bfseries] {Technicien};
+
+        \node[actor] (mgr) at (-3.5, -3.5) {};
+        \node[below=0.05cm of mgr, font=\small\bfseries, align=center] {Responsable\\Maintenance};
+
+        \node[actor] (adm) at (-3.5, -7.0) {};
+        \node[below=0.05cm of adm, font=\small\bfseries] {Administrateur};
+
+        % Generalization
+        \draw[->, thick] (tech) -- (op);
+        \draw[->, thick] (mgr) -- (tech);
+        \draw[->, thick] (adm) -- (mgr);
+
+        % Use Cases
+        \node[usecase] (uc1) at (3.5, 5.5) {Scanner QR Code Équipement};
+        \node[usecase] (uc2) at (3.5, 3.8) {Signaler Panne (Repair Request)};
+        \node[usecase] (uc3) at (3.5, 1.8) {Gérer Ordres \& Check-lists};
+        \node[usecase] (uc4) at (3.5, 0.0) {Journalisation en Langage Naturel};
+        \node[usecase] (uc5) at (3.5, -1.8) {Consommer Pièces de Rechange};
+        \node[usecase] (uc6) at (3.5, -3.8) {Ordonnancer Plans Préventifs};
+        \node[usecase] (uc7) at (3.5, -5.5) {Consulter Analytique \& Prédictif};
+        \node[usecase] (uc8) at (3.5, -7.2) {Configurer Clés LLM \& Piste d'Audit};
+
+        \node[usecase] (uc_auth) at (11.5, 0.0) {S'authentifier};
+
+        % Connections Actors -> Use Cases
+        \draw[->, thick, odooDark] (op) -- (uc1);
+        \draw[->, thick, odooDark] (op) -- (uc2);
+        \draw[->, thick, odooDark] (tech) -- (uc3);
+        \draw[->, thick, odooDark] (tech) -- (uc4);
+        \draw[->, thick, odooDark] (tech) -- (uc5);
+        \draw[->, thick, odooDark] (mgr) -- (uc6);
+        \draw[->, thick, odooDark] (mgr) -- (uc7);
+        \draw[->, thick, odooDark] (adm) -- (uc8);
+
+        % Includes to Auth
+        \draw[dashed, ->, odooBlue] (uc1) -- (uc_auth);
+        \draw[dashed, ->, odooBlue] (uc2) -- (uc_auth);
+        \draw[dashed, ->, odooBlue] (uc3) -- (uc_auth);
+        \draw[dashed, ->, odooBlue] (uc6) -- (uc_auth);
+
+    \end{tikzpicture}
+    \end{adjustbox}
+    \caption{Diagramme de cas d'utilisation général du système}
+    \label{fig:usecase_global}
+\end{figure}
+
+\paragraph{Cas d'Utilisation Détaillé : Gestion des Ordres et Confirmation Écriture}
+La figure \ref{fig:usecase_orders} explicite le cycle d'exécution d'une intervention avec prévisualisation et confirmation.
+
+\begin{figure}[!ht]
+    \centering
+    \begin{adjustbox}{max width=0.92\textwidth}
+    \begin{tikzpicture}[
+        actor/.style={draw=odooDark, circle, minimum size=0.9cm, align=center, thick, fill=white},
+        usecase/.style={draw=odooPurple, fill=lightPurple, ellipse, minimum width=3.4cm, minimum height=0.75cm, align=center, font=\small},
+        systembox/.style={draw=odooDark, thick, rounded corners=6pt}
+    ]
+        \draw[systembox] (-0.5, -5.8) rectangle (13.0, 4.5);
+        \node[font=\bfseries\color{odooPurple}] at (6.2, 4.0) {Gestion des Ordres et Interactions Intelligentes};
+
+        \node[actor] (mgr) at (-2.5, 2.0) {};
+        \node[below=0.05cm of mgr, font=\small\bfseries, align=center] {Responsable\\Maintenance};
+
+        \node[actor] (tech) at (-2.5, -2.5) {};
+        \node[below=0.05cm of tech, font=\small\bfseries] {Technicien};
+
+        \node[usecase] (create_ord) at (3.0, 2.5) {Créer / Confirmer Ordre};
+        \node[usecase] (assign_tech) at (3.0, 1.0) {Assigner Technicien};
+        \node[usecase] (nl_log) at (3.0, -0.8) {Dicter Journal (NL Logger)};
+        \node[usecase] (consume_parts) at (3.0, -2.5) {Consommer Pièces Détachées};
+        \node[usecase] (close_ord) at (3.0, -4.2) {Clôturer Ordre (Done)};
+
+        \node[usecase] (preview_confirm) at (9.2, -0.8) {Prévisualiser \& Confirmer};
+        \node[usecase] (calc_cost) at (9.2, -2.5) {Calculer Coût Consolidé};
+        \node[usecase] (update_health) at (9.2, -4.2) {Recalculer Health Score};
+
+        \draw[->, thick, odooDark] (mgr) -- (create_ord);
+        \draw[->, thick, odooDark] (mgr) -- (assign_tech);
+        \draw[->, thick, odooDark] (tech) -- (nl_log);
+        \draw[->, thick, odooDark] (tech) -- (consume_parts);
+        \draw[->, thick, odooDark] (tech) -- (close_ord);
+
+        \draw[dashed, ->, odooBlue] (nl_log) -- (preview_confirm);
+        \draw[dashed, ->, odooBlue] (consume_parts) -- (calc_cost);
+        \draw[dashed, ->, odooBlue] (close_ord) -- (update_health);
+
+    \end{tikzpicture}
+    \end{adjustbox}
+    \caption{Diagramme de cas d'utilisation détaillé du cycle d'intervention}
+    \label{fig:usecase_orders}
+\end{figure}
+
+\newpage
+\subsection{Diagramme de Classes Structurel}
+Le diagramme de classes de la figure \ref{fig:class_diagram} synthétise les entités maîtresses de l'ORM d'Odoo 18, leurs attributs distinctifs et leurs relations d'association et de composition, incluant l'arborescence géographique multi-sites (\texttt{equipment.location}) et la table de prédiction/audit (\texttt{equipment.ai.prediction}).
+
+\begin{figure}[!ht]
+    \centering
+    \begin{adjustbox}{max width=0.98\textwidth}
+    \begin{tikzpicture}[
+        scale=0.75, transform shape,
+        class/.style={
+            rectangle,
+            draw=odooDark,
+            thick,
+            anchor=north,
+            rectangle split,
+            rectangle split parts=2,
+            minimum width=4.8cm,
+            text width=4.8cm,
+            align=left,
+            font=\footnotesize,
+            fill=white
+        }
+    ]
+
+    % Class: equipment.category
+    \node (Category) [class] at (-6.5, 0) {
+        \textbf{\color{odooPurple}EquipmentCategory}
+        \nodepart{second}
+        + name : Char\\
+        + code : Char\\
+        + parent\_id : Many2one\\
+        + maintenance\_frequency : Integer\\
+        + equipment\_count : Integer
+    };
+
+    % Class: equipment.location
+    \node (Location) [class] at (-6.5, -4.5) {
+        \textbf{\color{odooPurple}EquipmentLocation}
+        \nodepart{second}
+        + name : Char\\
+        + complete\_name : Char\\
+        + location\_type : Selection\\
+        + parent\_id : Many2one\\
+        + site\_id : Many2one\\
+        + equipment\_count : Integer
+    };
+
+    % Class: equipment.equipment
+    \node (Equipment) [class] at (0, 0) {
+        \textbf{\color{odooPurple}EquipmentEquipment}
+        \nodepart{second}
+        + name : Char\\
+        + serial\_no : Char\\
+        + category\_id : Many2one\\
+        + location\_id : Many2one\\
+        + state : Selection\\
+        + health\_score : Float\\
+        + purchase\_date : Date\\
+        + warranty\_end\_date : Date\\
+        + qr\_code : Binary
+    };
+
+    % Class: equipment.ai.prediction
+    \node (AIPred) [class] at (0, -5.5) {
+        \textbf{\color{odooPurple}EquipmentAIPrediction}
+        \nodepart{second}
+        + equipment\_id : Many2one\\
+        + prediction\_type : Selection\\
+        + failure\_risk\_score : Float\\
+        + predicted\_failure\_date : Date\\
+        + prompt\_tokens : Integer\\
+        + execution\_status : Selection
+    };
+
+    % Class: equipment.maintenance.order
+    \node (Order) [class] at (6.5, 0) {
+        \textbf{\color{odooPurple}MaintenanceOrder}
+        \nodepart{second}
+        + name : Char (Sequence)\\
+        + equipment\_id : Many2one\\
+        + order\_type : Selection\\
+        + priority : Selection\\
+        + state : Selection\\
+        + duration\_hours : Float\\
+        + total\_parts\_cost : Monetary\\
+        + total\_cost : Monetary
+    };
+
+    % Class: equipment.spare.part.line
+    \node (SparePart) [class] at (6.5, -5.0) {
+        \textbf{\color{odooPurple}SparePartLine}
+        \nodepart{second}
+        + order\_id : Many2one\\
+        + product\_id : Many2one\\
+        + quantity : Float\\
+        + unit\_cost : Float\\
+        + subtotal\_cost : Float
+    };
+
+    % Relations
+    \draw[thick, ->] (Category) -- node[above, font=\scriptsize] {1..* regroupe} (Equipment);
+    \draw[thick, ->] (Location) -- node[above, font=\scriptsize] {1..* héberge} (Equipment);
+    \draw[thick, ->] (Equipment) -- node[above, font=\scriptsize] {1..* subit} (Order);
+    \draw[thick, ->] (Equipment) -- node[left, font=\scriptsize] {1..* historise} (AIPred);
+    \draw[thick, ->] (Order) -- node[right, font=\scriptsize] {1..* consomme} (SparePart);
+
+    \end{tikzpicture}
+    \end{adjustbox}
+    \caption{Diagramme de classes du système de gestion de maintenance et d'IA}
+    \label{fig:class_diagram}
+\end{figure}
+
+\newpage
+\subsection{Diagrammes de Séquence Comportementaux}
+
+\paragraph{Scénario 1 : Signalement de Panne et Création d'Ordre de Maintenance}
+La figure \ref{fig:seq_repair_to_order} détaille les échanges intervenant depuis le signalement d'un dysfonctionnement par un opérateur via code QR jusqu'à l'assignation d'un technicien.
+
+\begin{figure}[!ht]
+    \centering
+    \begin{adjustbox}{max width=0.95\textwidth}
+    \begin{tikzpicture}[node distance=2.6cm, auto, thick]
+        % Lifelines
+        \node (OP) [font=\small\bfseries] {Opérateur};
+        \node (UI) [right=of OP, font=\small\bfseries] {Odoo Web (OWL)};
+        \node (ORM) [right=of UI, font=\small\bfseries] {ORM Odoo 18};
+        \node (DB) [right=of ORM, font=\small\bfseries] {PostgreSQL};
+        \node (MGR) [right=of DB, font=\small\bfseries] {Responsable};
+
+        % Dotted lines
+        \draw[dotted, thick] (OP) -- ++(0,-12);
+        \draw[dotted, thick] (UI) -- ++(0,-12);
+        \draw[dotted, thick] (ORM) -- ++(0,-12);
+        \draw[dotted, thick] (DB) -- ++(0,-12);
+        \draw[dotted, thick] (MGR) -- ++(0,-12);
+
+        % Messages
+        \path (OP) -- ++(0,-1.5) coordinate (op1);
+        \path (UI) -- ++(0,-1.5) coordinate (ui1);
+        \draw[->] (op1) -- node [above, font=\scriptsize] {1. Scan QR Code \& Soumet Panne} (ui1);
+
+        \path (UI) -- ++(0,-2.8) coordinate (ui2);
+        \path (ORM) -- ++(0,-2.8) coordinate (orm2);
+        \draw[->] (ui2) -- node [above, font=\scriptsize] {2. create(vals) `repair.request`} (orm2);
+
+        \path (ORM) -- ++(0,-4.0) coordinate (orm3);
+        \path (DB) -- ++(0,-4.0) coordinate (db3);
+        \draw[->] (orm3) -- node [above, font=\scriptsize] {3. INSERT INTO repair\_request} (db3);
+
+        \path (ORM) -- ++(0,-5.2) coordinate (orm4);
+        \path (MGR) -- ++(0,-5.2) coordinate (mgr4);
+        \draw[dashed, ->] (orm4) -- node [above, font=\scriptsize] {4. Notification / Mail Activity} (mgr4);
+
+        \path (MGR) -- ++(0,-6.8) coordinate (mgr5);
+        \path (UI) -- ++(0,-6.8) coordinate (ui5);
+        \draw[->] (mgr5) -- node [above, font=\scriptsize] {5. action\_create\_maintenance\_order()} (ui5);
+
+        \path (UI) -- ++(0,-8.2) coordinate (ui6);
+        \path (ORM) -- ++(0,-8.2) coordinate (orm6);
+        \draw[->] (ui6) -- node [above, font=\scriptsize] {6. Instanciation `equipment.maintenance.order`} (orm6);
+
+        \path (ORM) -- ++(0,-9.5) coordinate (orm7);
+        \path (DB) -- ++(0,-9.5) coordinate (db7);
+        \draw[->] (orm7) -- node [above, font=\scriptsize] {7. INSERT INTO maintenance\_order} (db7);
+
+        \path (ORM) -- ++(0,-10.8) coordinate (orm8);
+        \path (UI) -- ++(0,-10.8) coordinate (ui8);
+        \draw[dashed, ->] (orm8) -- node [above, font=\scriptsize] {8. Vue Formulaire Ordre Ouverte} (ui8);
+
+    \end{tikzpicture}
+    \end{adjustbox}
+    \caption{Diagramme de séquence : Signalement d'une panne et création d'un ordre}
+    \label{fig:seq_repair_to_order}
+\end{figure}
+
+\paragraph{Scénario 2 : Clôture d'Intervention, Consommation de Pièces et Recalcul du Health Score}
+La figure \ref{fig:seq_execution_health} modélise l'achèvement d'un ordre de travail avec imputation des coûts et mise à jour dynamique du score de santé.
+
+\begin{figure}[!ht]
+    \centering
+    \begin{adjustbox}{max width=0.95\textwidth}
+    \begin{tikzpicture}[node distance=2.8cm, auto, thick]
+        \node (TECH) [font=\small\bfseries] {Technicien};
+        \node (UI) [right=of TECH, font=\small\bfseries] {Odoo Web Client};
+        \node (ORM) [right=of UI, font=\small\bfseries] {Logique ORM / Module};
+        \node (DB) [right=of ORM, font=\small\bfseries] {PostgreSQL};
+
+        \draw[dotted, thick] (TECH) -- ++(0,-11);
+        \draw[dotted, thick] (UI) -- ++(0,-11);
+        \draw[dotted, thick] (ORM) -- ++(0,-11);
+        \draw[dotted, thick] (DB) -- ++(0,-11);
+
+        \path (TECH) -- ++(0,-1.5) coordinate (t1);
+        \path (UI) -- ++(0,-1.5) coordinate (ui1);
+        \draw[->] (t1) -- node [above, font=\scriptsize] {1. Coche Check-list \& Saisie Pièces} (ui1);
+
+        \path (UI) -- ++(0,-3.0) coordinate (ui2);
+        \path (ORM) -- ++(0,-3.0) coordinate (orm2);
+        \draw[->] (ui2) -- node [above, font=\scriptsize] {2. action\_mark\_done()} (orm2);
+
+        \path (ORM) -- ++(0,-4.5) coordinate (orm3);
+        \path (DB) -- ++(0,-4.5) coordinate (db3);
+        \draw[->] (orm3) -- node [above, font=\scriptsize] {3. UPDATE stock\_quant (Mouvement Stock)} (db3);
+
+        \path (ORM) -- ++(0,-6.0) coordinate (orm4);
+        \node[draw=odooPurple, fill=lightPurple, scale=0.8, anchor=center] at (orm4) {\_compute\_total\_cost()};
+
+        \path (ORM) -- ++(0,-7.5) coordinate (orm5);
+        \node[draw=odooBlue, fill=white, scale=0.8, anchor=center] at (orm5) {\_compute\_health\_score()};
+
+        \path (ORM) -- ++(0,-9.0) coordinate (orm6);
+        \path (DB) -- ++(0,-9.0) coordinate (db6);
+        \draw[->] (orm6) -- node [above, font=\scriptsize] {4. UPDATE equipment SET health\_score = X} (db6);
+
+        \path (ORM) -- ++(0,-10.2) coordinate (orm7);
+        \path (UI) -- ++(0,-10.2) coordinate (ui7);
+        \draw[dashed, ->] (orm7) -- node [above, font=\scriptsize] {5. Ordre Marqué Fait (Statut Done)} (ui7);
+
+    \end{tikzpicture}
+    \end{adjustbox}
+    \caption{Diagramme de séquence : Clôture de maintenance et recalcul du score}
+    \label{fig:seq_execution_health}
+\end{figure}
+
+\section{Conclusion}
+Ce chapitre a permis d'établir les fondations conceptuelles de la solution logicielle en intégrant les contraintes multi-sites, les exigences ergonomiques de navigation multi-vues et la sécurité d'isolation de la couche BYO-LLM. Le chapitre 3 se consacrera à l'architecture système, à l'implémentation technique sous Odoo 18, ainsi qu'aux mécanismes approfondis de test et de validation de navigation.
